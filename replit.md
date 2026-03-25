@@ -48,6 +48,19 @@ Every package extends `tsconfig.base.json` which sets `composite: true`. The roo
 - `pnpm run build` — runs `typecheck` first, then recursively runs `build` in all packages that define it
 - `pnpm run typecheck` — runs `tsc --build --emitDeclarationOnly` using project references
 
+## Artifacts
+
+### `artifacts/alkhatib-contracting` (`@workspace/alkhatib-contracting`)
+
+Full Arabic RTL website for مؤسسة الخطيب للمقاولات (Al-Khatib Contracting). React + Vite frontend with:
+- Pages: Home, Services, Service Detail, Projects, Project Detail, Blog, Blog Detail, About, Contact
+- Dynamic Hero sections per page
+- Inquiry Modal (استفسار) with customer details form, submits to `/api/inquiries`
+- Orange (#F97316) + Blue (#1E40AF) color scheme
+- Framer Motion animations
+- Fully RTL Arabic layout
+- Located at `previewPath: /`
+
 ## Packages
 
 ### `artifacts/api-server` (`@workspace/api-server`)

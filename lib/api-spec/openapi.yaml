@@ -1,15 +1,16 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: API for Al-Khatib Contracting
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: inquiries
+    description: Customer inquiry operations
 paths:
   /healthz:
     get:
@@ -24,6 +25,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /inquiries:
+    post:
+      operationId: submitInquiry
+      tags: [inquiries]
+      summary: Submit a customer inquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InquiryRequest"
+      responses:
+        "201":
+          description: Inquiry submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InquiryResponse"
+    get:
+      operationId: getInquiries
+      tags: [inquiries]
+      summary: Get all inquiries
+      responses:
+        "200":
+          description: List of inquiries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InquiryResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +65,57 @@ components:
           type: string
       required:
         - status
-
+    InquiryRequest:
+      type: object
+      properties:
+        customerName:
+          type: string
+        customerPhone:
+          type: string
+        customerEmail:
+          type: string
+        serviceType:
+          type: string
+        serviceTitle:
+          type: string
+        message:
+          type: string
+        address:
+          type: string
+      required:
+        - customerName
+        - customerPhone
+        - serviceType
+        - message
+    InquiryResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        customerName:
+          type: string
+        customerPhone:
+          type: string
+        customerEmail:
+          type: string
+        serviceType:
+          type: string
+        serviceTitle:
+          type: string
+        message:
+          type: string
+        address:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+      required:
+        - id
+        - customerName
+        - customerPhone
+        - serviceType
+        - message
+        - createdAt
+        - status
