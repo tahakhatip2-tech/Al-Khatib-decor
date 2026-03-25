@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Phone, MapPin, Clock, Menu, X, ChevronLeft, Facebook, Instagram, Twitter } from "lucide-react";
 import { COMPANY_INFO } from "@/data/mock-data";
 import { motion, AnimatePresence } from "framer-motion";
+import { Logo } from "@/components/logo";
 
 const NAV_LINKS = [
   { href: "/", label: "الرئيسية" },
@@ -64,14 +65,8 @@ export function Layout({ children }: { children: ReactNode }) {
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">
-              <img src={`${import.meta.env.BASE_URL}images/logo.png`} alt="Logo" className="w-8 h-8 object-contain filter brightness-0 invert" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-black text-secondary leading-tight">مؤسسة الخطيب</span>
-              <span className="text-xs font-semibold text-primary tracking-widest uppercase">للمقاولات والديكور</span>
-            </div>
+          <Link href="/" className="group hover:opacity-90 transition-opacity">
+            <Logo variant="full" size="md" />
           </Link>
 
           {/* Desktop Nav */}
@@ -171,15 +166,9 @@ export function Layout({ children }: { children: ReactNode }) {
             
             {/* Brand */}
             <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center">
-                  <img src={`${import.meta.env.BASE_URL}images/logo.png`} alt="Logo" className="w-8 h-8 object-contain filter" style={{ filter: 'brightness(0) saturate(100%) invert(43%) sepia(87%) saturate(2250%) hue-rotate(352deg) brightness(99%) contrast(96%)' }} />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-xl font-black text-white leading-tight">مؤسسة الخطيب</span>
-                  <span className="text-xs font-semibold text-primary tracking-widest uppercase">للمقاولات</span>
-                </div>
-              </div>
+              <Link href="/" className="inline-block hover:opacity-90 transition-opacity">
+                <Logo variant="white" size="md" />
+              </Link>
               <p className="text-sm leading-relaxed">
                 مؤسسة رائدة في مجال المقاولات والتشطيبات والديكور الداخلي والخارجي، نقدم خدمات متكاملة بأعلى معايير الجودة والاحترافية لتلبية طموحات عملائنا.
               </p>

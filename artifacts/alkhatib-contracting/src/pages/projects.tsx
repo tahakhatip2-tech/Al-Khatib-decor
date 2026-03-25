@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Building2, Users, CalendarDays, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
+import { LogoIcon } from "@/components/logo";
 
 export default function Projects() {
   const categories = [
@@ -106,6 +107,14 @@ export default function Projects() {
                           alt={project.title} 
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
+                        {/* Brand Watermark */}
+                        <div className="absolute top-3 right-3 z-10 flex items-center gap-1 bg-secondary/75 backdrop-blur-sm rounded-lg px-2 py-1 shadow-md">
+                          <LogoIcon size={16} white />
+                          <div className="flex flex-col leading-none">
+                            <span className="text-white font-black" style={{ fontSize: 8 }}>الخطيب</span>
+                            <span className="text-orange-400 font-bold" style={{ fontSize: 6.5 }}>للمقاولات</span>
+                          </div>
+                        </div>
                         <div className="absolute inset-0 bg-secondary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm flex flex-col justify-center items-center p-8 text-center text-white">
                           <span className="text-primary font-bold text-sm mb-3 bg-white/10 px-3 py-1 rounded-full">{project.category}</span>
                           <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
