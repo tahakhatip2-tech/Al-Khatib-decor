@@ -8,7 +8,6 @@
 import * as zod from "zod";
 
 /**
- * Returns server health status
  * @summary Health check
  */
 export const HealthCheckResponse = zod.object({
@@ -44,3 +43,212 @@ export const GetInquiriesResponseItem = zod.object({
   status: zod.string(),
 });
 export const GetInquiriesResponse = zod.array(GetInquiriesResponseItem);
+
+/**
+ * @summary Get all services
+ */
+export const GetServicesResponseItem = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  icon: zod.string().optional(),
+  images: zod.array(zod.string()).optional(),
+  features: zod.array(zod.string()).optional(),
+  isActive: zod.boolean(),
+  sortOrder: zod.number(),
+  createdAt: zod.date(),
+  updatedAt: zod.date(),
+});
+export const GetServicesResponse = zod.array(GetServicesResponseItem);
+
+/**
+ * @summary Create a new service
+ */
+export const CreateServiceBody = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.enum(["interior", "exterior", "maintenance"]),
+  icon: zod.string().optional(),
+  images: zod.array(zod.string()).optional(),
+  features: zod.array(zod.string()).optional(),
+  isActive: zod.boolean().optional(),
+  sortOrder: zod.number().optional(),
+});
+
+/**
+ * @summary Get a single service
+ */
+export const GetServiceParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const GetServiceResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  icon: zod.string().optional(),
+  images: zod.array(zod.string()).optional(),
+  features: zod.array(zod.string()).optional(),
+  isActive: zod.boolean(),
+  sortOrder: zod.number(),
+  createdAt: zod.date(),
+  updatedAt: zod.date(),
+});
+
+/**
+ * @summary Update a service
+ */
+export const UpdateServiceParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateServiceBody = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.enum(["interior", "exterior", "maintenance"]),
+  icon: zod.string().optional(),
+  images: zod.array(zod.string()).optional(),
+  features: zod.array(zod.string()).optional(),
+  isActive: zod.boolean().optional(),
+  sortOrder: zod.number().optional(),
+});
+
+export const UpdateServiceResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  icon: zod.string().optional(),
+  images: zod.array(zod.string()).optional(),
+  features: zod.array(zod.string()).optional(),
+  isActive: zod.boolean(),
+  sortOrder: zod.number(),
+  createdAt: zod.date(),
+  updatedAt: zod.date(),
+});
+
+/**
+ * @summary Delete a service
+ */
+export const DeleteServiceParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const DeleteServiceResponse = zod.object({
+  success: zod.boolean(),
+  message: zod.string(),
+});
+
+/**
+ * @summary Get all projects
+ */
+export const GetProjectsResponseItem = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  location: zod.string().optional(),
+  completionDate: zod.string().optional(),
+  area: zod.string().optional(),
+  images: zod.array(zod.string()).optional(),
+  features: zod.array(zod.string()).optional(),
+  isActive: zod.boolean(),
+  isFeatured: zod.boolean(),
+  sortOrder: zod.number(),
+  createdAt: zod.date(),
+  updatedAt: zod.date(),
+});
+export const GetProjectsResponse = zod.array(GetProjectsResponseItem);
+
+/**
+ * @summary Create a new project
+ */
+export const CreateProjectBody = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  location: zod.string().optional(),
+  completionDate: zod.string().optional(),
+  area: zod.string().optional(),
+  images: zod.array(zod.string()).optional(),
+  features: zod.array(zod.string()).optional(),
+  isActive: zod.boolean().optional(),
+  isFeatured: zod.boolean().optional(),
+  sortOrder: zod.number().optional(),
+});
+
+/**
+ * @summary Get a single project
+ */
+export const GetProjectParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const GetProjectResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  location: zod.string().optional(),
+  completionDate: zod.string().optional(),
+  area: zod.string().optional(),
+  images: zod.array(zod.string()).optional(),
+  features: zod.array(zod.string()).optional(),
+  isActive: zod.boolean(),
+  isFeatured: zod.boolean(),
+  sortOrder: zod.number(),
+  createdAt: zod.date(),
+  updatedAt: zod.date(),
+});
+
+/**
+ * @summary Update a project
+ */
+export const UpdateProjectParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateProjectBody = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  location: zod.string().optional(),
+  completionDate: zod.string().optional(),
+  area: zod.string().optional(),
+  images: zod.array(zod.string()).optional(),
+  features: zod.array(zod.string()).optional(),
+  isActive: zod.boolean().optional(),
+  isFeatured: zod.boolean().optional(),
+  sortOrder: zod.number().optional(),
+});
+
+export const UpdateProjectResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  location: zod.string().optional(),
+  completionDate: zod.string().optional(),
+  area: zod.string().optional(),
+  images: zod.array(zod.string()).optional(),
+  features: zod.array(zod.string()).optional(),
+  isActive: zod.boolean(),
+  isFeatured: zod.boolean(),
+  sortOrder: zod.number(),
+  createdAt: zod.date(),
+  updatedAt: zod.date(),
+});
+
+/**
+ * @summary Delete a project
+ */
+export const DeleteProjectParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const DeleteProjectResponse = zod.object({
+  success: zod.boolean(),
+  message: zod.string(),
+});

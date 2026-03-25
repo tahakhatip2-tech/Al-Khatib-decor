@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, Loader2 } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, Loader2, MessageCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useSubmitInquiry } from "@workspace/api-client-react";
 import { useToast } from "@/hooks/use-toast";
+import { Helmet } from "react-helmet-async";
 
 const contactSchema = z.object({
   customerName: z.string().min(2, "الاسم مطلوب"),
@@ -61,10 +62,19 @@ export default function Contact() {
 
   return (
     <Layout>
+      <Helmet>
+        <title>اتصل بنا | مؤسسة الخطيب للمقاولات</title>
+        <meta name="description" content="تواصل مع مؤسسة الخطيب للمقاولات للحصول على استشارة مجانية لمشروعك. نرحب باتصالاتكم واستفساراتكم." />
+        <meta property="og:title" content="اتصل بنا - مؤسسة الخطيب للمقاولات" />
+        <meta property="og:description" content="تواصل معنا لأي استفسار أو لطلب استشارة مجانية لمشروعك." />
+        <meta property="og:type" content="website" />
+        <meta name="keywords" content="اتصل بنا, الخطيب للمقاولات, رقم هاتف, عنوان, عمان, الأردن" />
+        <link rel="canonical" href="https://alkhatib-contracting.com/contact" />
+      </Helmet>
+
       <PageHero 
         title="تواصل معنا"
         description="نحن هنا للاستماع إليك. تواصل معنا لأي استفسار أو لطلب استشارة مجانية لمشروعك."
-        // contact phone customer service
         bgImage="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?w=1920&q=80"
         breadcrumbs={[
           { label: "الرئيسية", href: "/" },
@@ -84,31 +94,31 @@ export default function Contact() {
               </div>
 
               <div className="space-y-6">
-                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border border-slate-100">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <MapPin className="w-6 h-6 text-primary" />
+                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border border-slate-100 hover:shadow-lg transition-shadow">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <MapPin className="w-7 h-7 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-bold text-secondary text-lg mb-1">العنوان</h4>
-                    <p className="text-slate-600">{COMPANY_INFO.address}</p>
+                    <p className="text-slate-600 leading-relaxed">{COMPANY_INFO.address}</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border border-slate-100">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <Phone className="w-6 h-6 text-primary" />
+                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border border-slate-100 hover:shadow-lg transition-shadow">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <Phone className="w-7 h-7 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-bold text-secondary text-lg mb-1">رقم الهاتف</h4>
-                    <a href={`tel:${COMPANY_INFO.phone}`} className="text-slate-600 hover:text-primary transition-colors block" dir="ltr">
+                    <a href={`tel:${COMPANY_INFO.phone}`} className="text-slate-600 hover:text-primary transition-colors block text-lg font-medium" dir="ltr">
                       {COMPANY_INFO.phoneDisplay}
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border border-slate-100">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <Mail className="w-6 h-6 text-primary" />
+                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border border-slate-100 hover:shadow-lg transition-shadow">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <Mail className="w-7 h-7 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-bold text-secondary text-lg mb-1">البريد الإلكتروني</h4>
@@ -118,9 +128,9 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border border-slate-100">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <Clock className="w-6 h-6 text-primary" />
+                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border border-slate-100 hover:shadow-lg transition-shadow">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <Clock className="w-7 h-7 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-bold text-secondary text-lg mb-1">أوقات العمل</h4>
@@ -128,15 +138,26 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
+              
+              {/* WhatsApp Button */}
+              <a 
+                href="https://wa.me/962782633162" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 w-full bg-[#25D366] hover:bg-[#128C7E] text-white p-4 rounded-2xl font-bold text-lg shadow-lg shadow-[#25D366]/20 transition-all hover:-translate-y-1"
+              >
+                <MessageCircle className="w-6 h-6" />
+                تواصل معنا عبر واتساب
+              </a>
             </div>
 
             {/* Contact Form */}
             <div className="lg:w-2/3">
-              <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-slate-100">
+              <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-slate-100 h-full">
                 <h3 className="text-2xl font-black text-secondary mb-6 pb-4 border-b border-slate-100">أرسل لنا رسالة</h3>
                 
                 {isSuccess ? (
-                  <div className="flex flex-col items-center justify-center py-16 text-center">
+                  <div className="flex flex-col items-center justify-center h-full py-16 text-center">
                     <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6">
                       <CheckCircle2 className="w-12 h-12 text-green-600" />
                     </div>
@@ -147,11 +168,11 @@ export default function Contact() {
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="customerName" className="text-right font-bold">الاسم الكريم <span className="text-red-500">*</span></Label>
+                        <Label htmlFor="customerName" className="text-right font-bold text-slate-700">الاسم الكريم <span className="text-red-500">*</span></Label>
                         <Input 
                           id="customerName" 
                           placeholder="أدخل اسمك" 
-                          className="h-12 bg-slate-50 focus-visible:ring-primary rounded-xl"
+                          className="h-14 bg-slate-50 focus-visible:ring-primary focus-visible:bg-white rounded-xl border-slate-200"
                           {...form.register("customerName")} 
                         />
                         {form.formState.errors.customerName && (
@@ -160,12 +181,12 @@ export default function Contact() {
                       </div>
                       
                       <div className="space-y-2">
-                        <Label htmlFor="customerPhone" className="text-right font-bold">رقم الهاتف <span className="text-red-500">*</span></Label>
+                        <Label htmlFor="customerPhone" className="text-right font-bold text-slate-700">رقم الهاتف <span className="text-red-500">*</span></Label>
                         <Input 
                           id="customerPhone" 
                           placeholder="مثال: 0782633162" 
                           dir="ltr"
-                          className="h-12 text-right bg-slate-50 focus-visible:ring-primary rounded-xl"
+                          className="h-14 text-right bg-slate-50 focus-visible:ring-primary focus-visible:bg-white rounded-xl border-slate-200"
                           {...form.register("customerPhone")} 
                         />
                         {form.formState.errors.customerPhone && (
@@ -175,12 +196,12 @@ export default function Contact() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="customerEmail" className="text-right font-bold">البريد الإلكتروني (اختياري)</Label>
+                      <Label htmlFor="customerEmail" className="text-right font-bold text-slate-700">البريد الإلكتروني (اختياري)</Label>
                       <Input 
                         id="customerEmail" 
                         type="email" 
                         dir="ltr"
-                        className="h-12 text-right bg-slate-50 focus-visible:ring-primary rounded-xl"
+                        className="h-14 text-right bg-slate-50 focus-visible:ring-primary focus-visible:bg-white rounded-xl border-slate-200"
                         placeholder="email@example.com" 
                         {...form.register("customerEmail")} 
                       />
@@ -190,11 +211,11 @@ export default function Contact() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message" className="text-right font-bold">نص الرسالة <span className="text-red-500">*</span></Label>
+                      <Label htmlFor="message" className="text-right font-bold text-slate-700">نص الرسالة <span className="text-red-500">*</span></Label>
                       <Textarea 
                         id="message" 
                         placeholder="اكتب رسالتك أو استفسارك هنا..." 
-                        className="min-h-[160px] resize-none bg-slate-50 focus-visible:ring-primary rounded-xl p-4"
+                        className="min-h-[180px] resize-none bg-slate-50 focus-visible:ring-primary focus-visible:bg-white rounded-xl p-4 border-slate-200"
                         {...form.register("message")} 
                       />
                       {form.formState.errors.message && (
@@ -206,7 +227,7 @@ export default function Contact() {
                       type="submit" 
                       disabled={isPending}
                       size="lg"
-                      className="w-full bg-primary hover:bg-primary/90 text-white h-14 text-lg rounded-xl shadow-lg shadow-primary/20"
+                      className="w-full bg-primary hover:bg-primary/90 text-white h-14 text-lg rounded-xl shadow-lg shadow-primary/20 transition-all hover:scale-[1.02]"
                     >
                       {isPending ? (
                         <>
@@ -230,14 +251,17 @@ export default function Contact() {
       </section>
 
       {/* Map Section */}
-      <section className="h-[400px] w-full bg-slate-200 relative">
-        {/* Placeholder for actual Google Map */}
+      <section className="h-[450px] w-full bg-slate-200 relative">
         <div className="absolute inset-0 flex items-center justify-center bg-slate-800 text-white">
-          <div className="text-center">
-            <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-2">موقعنا على الخريطة</h3>
-            <p>{COMPANY_INFO.address}</p>
-            <p className="text-sm text-slate-400 mt-2">(هنا سيتم تضمين خريطة تفاعلية)</p>
+          <div className="text-center bg-slate-900/60 p-10 rounded-3xl backdrop-blur-sm border border-slate-700 max-w-md">
+            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <MapPin className="w-8 h-8 text-primary" />
+            </div>
+            <h3 className="text-2xl font-bold mb-3">موقعنا على الخريطة</h3>
+            <p className="text-slate-300 text-lg mb-4">{COMPANY_INFO.address}</p>
+            <p className="text-sm text-slate-400 bg-slate-800/80 px-4 py-2 rounded-full inline-block">
+              (هنا سيتم تضمين خريطة تفاعلية Google Maps)
+            </p>
           </div>
         </div>
       </section>

@@ -9,6 +9,11 @@ export interface HealthStatus {
   status: string;
 }
 
+export interface DeleteResponse {
+  success: boolean;
+  message: string;
+}
+
 export interface InquiryRequest {
   customerName: string;
   customerPhone: string;
@@ -30,4 +35,69 @@ export interface InquiryResponse {
   address?: string;
   createdAt: string;
   status: string;
+}
+
+export type ServiceRequestCategory =
+  (typeof ServiceRequestCategory)[keyof typeof ServiceRequestCategory];
+
+export const ServiceRequestCategory = {
+  interior: "interior",
+  exterior: "exterior",
+  maintenance: "maintenance",
+} as const;
+
+export interface ServiceRequest {
+  title: string;
+  description: string;
+  category: ServiceRequestCategory;
+  icon?: string;
+  images?: string[];
+  features?: string[];
+  isActive?: boolean;
+  sortOrder?: number;
+}
+
+export interface ServiceResponse {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  icon?: string;
+  images?: string[];
+  features?: string[];
+  isActive: boolean;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProjectRequest {
+  title: string;
+  description: string;
+  category: string;
+  location?: string;
+  completionDate?: string;
+  area?: string;
+  images?: string[];
+  features?: string[];
+  isActive?: boolean;
+  isFeatured?: boolean;
+  sortOrder?: number;
+}
+
+export interface ProjectResponse {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  location?: string;
+  completionDate?: string;
+  area?: string;
+  images?: string[];
+  features?: string[];
+  isActive: boolean;
+  isFeatured: boolean;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
 }

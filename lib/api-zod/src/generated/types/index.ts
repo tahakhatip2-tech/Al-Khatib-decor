@@ -6,6 +6,12 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./deleteResponse";
 export * from "./healthStatus";
 export * from "./inquiryRequest";
 export * from "./inquiryResponse";
+export * from "./projectRequest";
+export * from "./projectResponse";
+export * from "./serviceRequest";
+export * from "./serviceRequestCategory";
+export * from "./serviceResponse";
