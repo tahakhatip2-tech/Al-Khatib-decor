@@ -17,7 +17,8 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    // Standard layout for Vercel deployment
+    outDir: "dist",
     emptyOutDir: true,
   },
   server: {
