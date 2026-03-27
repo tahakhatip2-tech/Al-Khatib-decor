@@ -1,0 +1,18 @@
+packages:
+  "framer-motion": "For page transitions and scroll-triggered animations to make the UI feel alive"
+  "@hookform/resolvers": "Zod validation with react-hook-form for the inquiry modal"
+  "date-fns": "For formatting blog and project dates"
+
+images:
+  - path: "artifacts/alkhatib-contracting/public/images/logo.png"
+    description: "Professional geometric logo mark for an Arabic contracting and interior design company, combining a house outline with a paintbrush or tools, minimal, modern, orange and deep blue colors on transparent background"
+    aspect_ratio: "1:1"
+  - path: "artifacts/alkhatib-contracting/public/images/hero-pattern.png"
+    description: "Abstract subtle geometric pattern background with faint blueprints and architectural lines, dark blue theme with warm soft orange light leaks"
+    aspect_ratio: "16:9"
+
+notes:
+  - Application uses RTL (Right-to-Left) layout for Arabic language
+  - Primary color is Orange, Secondary is Deep Blue
+  - Mock data is used for Services, Projects, and Blogs since the API only supports Inquiry submission
+  - The generated react-query hooks from @workspace/api-client-react are used for the POST /api/inquiries endpoint
