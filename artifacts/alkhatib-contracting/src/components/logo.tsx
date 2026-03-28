@@ -13,61 +13,69 @@ const sizes = {
 };
 
 export function LogoIcon({ size = 44, white = false }: { size?: number; white?: boolean }) {
-  const orange = white ? "#ffffff" : "#F97316";
+  const yellow = white ? "#ffffff" : "#EAB308";
   const blue = white ? "rgba(255,255,255,0.15)" : "#1E40AF";
   const blueAccent = white ? "rgba(255,255,255,0.6)" : "#2563EB";
+  const yellowLight = white ? "#ffffff" : "#FDE047";
 
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 80 80"
+      viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="drop-shadow-sm"
     >
-      {/* Background square with rounded corners */}
-      <rect width="80" height="80" rx="16" fill={blue} />
+      <defs>
+        <linearGradient id={`${white ? 'w-' : ''}blueGrad`} x1="0" y1="0" x2="100" y2="100">
+          <stop stopColor={blueAccent} />
+          <stop offset="1" stopColor={blue} />
+        </linearGradient>
+        <linearGradient id={`${white ? 'w-' : ''}yellowGrad`} x1="0" y1="100" x2="100" y2="0">
+          <stop stopColor={yellow} />
+          <stop offset="1" stopColor={yellowLight} />
+        </linearGradient>
+        <filter id="f1" x="0" y="0" width="150%" height="150%">
+          <feOffset result="offOut" in="SourceAlpha" dx="2" dy="2" />
+          <feGaussianBlur result="blurOut" in="offOut" stdDeviation="2" />
+          <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+        </filter>
+      </defs>
 
-      {/* Building / skyline silhouette */}
-      {/* Main building center */}
-      <rect x="30" y="22" width="20" height="34" rx="2" fill={blueAccent} />
-      {/* Left tower */}
-      <rect x="14" y="33" width="14" height="23" rx="2" fill={blueAccent} />
-      {/* Right tower */}
-      <rect x="52" y="29" width="14" height="27" rx="2" fill={blueAccent} />
-
-      {/* Ground line */}
-      <rect x="10" y="55" width="60" height="3" rx="1.5" fill={orange} />
-
-      {/* Windows on center building */}
-      <rect x="35" y="27" width="5" height="5" rx="1" fill={orange} />
-      <rect x="43" y="27" width="5" height="5" rx="1" fill={orange} />
-      <rect x="35" y="36" width="5" height="5" rx="1" fill={orange} />
-      <rect x="43" y="36" width="5" height="5" rx="1" fill={orange} />
-
-      {/* Windows on left tower */}
-      <rect x="18" y="38" width="4" height="4" rx="1" fill={orange} />
-      <rect x="24" y="38" width="4" height="4" rx="1" fill={orange} />
-      <rect x="18" y="45" width="4" height="4" rx="1" fill={orange} />
-      <rect x="24" y="45" width="4" height="4" rx="1" fill={orange} />
-
-      {/* Windows on right tower */}
-      <rect x="55" y="34" width="4" height="4" rx="1" fill={orange} />
-      <rect x="61" y="34" width="4" height="4" rx="1" fill={orange} />
-      <rect x="55" y="42" width="4" height="4" rx="1" fill={orange} />
-      <rect x="61" y="42" width="4" height="4" rx="1" fill={orange} />
-
-      {/* Orange accent arc at top of center building - like a crown */}
+      {/* Hexagonal Base / 3D Foundation */}
       <path
-        d="M30 22 Q40 14 50 22"
-        stroke={orange}
-        strokeWidth="3"
-        fill="none"
-        strokeLinecap="round"
+        d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z"
+        fill={`url(#${white ? 'w-' : ''}blueGrad)`}
+        className="opacity-90"
       />
 
-      {/* Door */}
-      <rect x="36" y="46" width="8" height="9" rx="1" fill={orange} opacity="0.9" />
+      {/* Building Structure Left (The 'A' side) */}
+      <path
+        d="M25 40 L48 20 L48 85 L25 85 Z"
+        fill="white"
+        fillOpacity="0.1"
+      />
+      
+      {/* 3D Geometric Initials 'AK' stylized into building shapes */}
+      {/* Letter A (left building) */}
+      <path
+        d="M20 75 L45 20 L55 20 L80 75 L65 75 L50 45 L35 75 Z"
+        fill={`url(#${white ? 'w-' : ''}yellowGrad)`}
+      />
+      
+      {/* Central Building Spine */}
+      <rect x="46" y="15" width="8" height="75" fill={white ? "white" : "#1E3A8A"} fillOpacity={white ? "0.2" : "0.8"} />
+
+      {/* Intersection Building (The 'K' side) */}
+      <path
+        d="M50 45 L75 25 L85 35 L55 55 L90 85 L75 85 L50 55 Z"
+        fill={`url(#${white ? 'w-' : ''}yellowGrad)`}
+      />
+
+      {/* Highlights for 3D effect */}
+      <path d="M45 20 L55 20 L50 15 Z" fill="#ffffff" fillOpacity="0.5" />
+      <path d="M50 95 L46 90 L54 90 Z" fill="#000000" fillOpacity="0.2" />
     </svg>
   );
 }
@@ -90,7 +98,7 @@ export function Logo({ variant = "full", size = "md", className = "" }: LogoProp
           <span className="text-white font-black" style={{ fontSize: 9, letterSpacing: 0.5 }}>
             الخطيب
           </span>
-          <span className="text-orange-400 font-bold" style={{ fontSize: 7 }}>
+          <span className="text-yellow-400 font-bold" style={{ fontSize: 7 }}>
             للمقاولات
           </span>
         </div>
@@ -106,7 +114,7 @@ export function Logo({ variant = "full", size = "md", className = "" }: LogoProp
           <span className="font-black text-white" style={{ fontSize: s.text1 }}>
             مؤسسة الخطيب
           </span>
-          <span className="font-semibold text-orange-400 uppercase tracking-widest" style={{ fontSize: s.text2 }}>
+          <span className="font-semibold text-yellow-400 uppercase tracking-widest" style={{ fontSize: s.text2 }}>
             للمقاولات والديكور
           </span>
         </div>

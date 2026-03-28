@@ -8,6 +8,12 @@ export const SERVICES = [
     description: "أحدث تصاميم الجبس بورد والديكورات الداخلية التي تضفي لمسة من الفخامة والجمال على مساحاتك.",
     icon: LayoutTemplate,
     image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+      "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=800&q=80",
+      "https://images.unsplash.com/photo-1562259929-b7e181d8f000?w=800&q=80",
+      "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=800&q=80"
+    ],
     features: ["تصاميم عصرية وكلاسيكية", "إضاءة مخفية احترافية", "مقاومة للرطوبة", "تنفيذ دقيق وسريع"]
   },
   {
@@ -120,7 +126,8 @@ export const PROJECTS = [
     gallery: [
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
       "https://images.unsplash.com/photo-1600607687931-cebf66711515?w=800&q=80",
-      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80"
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80",
+      "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=800&q=80"
     ],
     date: "2024-02-15",
     description: "تنفيذ كامل لأعمال التشطيبات الداخلية والخارجية لفيلا في منطقة عبدون، شملت أعمال الديكور الجبسي، الدهانات الإيطالية، والأرضيات الرخامية الفاخرة."
@@ -132,7 +139,9 @@ export const PROJECTS = [
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
     gallery: [
       "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&q=80",
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80"
+      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80",
+      "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
     ],
     date: "2023-11-10",
     description: "تصميم وتنفيذ مكاتب عصرية بنظام المساحات المفتوحة، مع تركيب قواطع زجاجية وأسقف مستعارة وأرضيات مرتفعة."
@@ -144,7 +153,9 @@ export const PROJECTS = [
     image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80",
     gallery: [
       "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80",
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80"
+      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80",
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80",
+      "https://images.unsplash.com/photo-1504307651254-35680f356fce?w=800&q=80"
     ],
     date: "2024-01-05",
     description: "عملية تجديد شاملة لشقة قديمة شملت تغيير البنية التحتية من سباكة وكهرباء، وإعادة تصميم الفراغات الداخلية بتشطيبات حديثة."

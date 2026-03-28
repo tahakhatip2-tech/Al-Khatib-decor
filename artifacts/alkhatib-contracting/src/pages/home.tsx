@@ -6,7 +6,7 @@ import { ServiceCard } from "@/components/service-card";
 import { InquiryModal } from "@/components/inquiry-modal";
 import { SERVICES, PROJECTS, COMPANY_INFO } from "@/data/mock-data";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle2, ChevronLeft, Building, HardHat, ShieldCheck, Trophy, ArrowRight, Clock, Star, Quote, Target, Eye, Users, ChevronRight } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ChevronLeft, Building, HardHat, ShieldCheck, Trophy, ArrowRight, Clock, Star, Quote, Target, Eye, Users, ChevronRight, Wand2 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { useRef } from "react";
 
@@ -16,11 +16,12 @@ function AnimatedCounter({ value, text }: { value: number, text: string }) {
   const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
+    let timer: ReturnType<typeof setInterval>;
     if (isInView) {
       let start = 0;
       const duration = 2000;
       const increment = value / (duration / 16);
-      const timer = setInterval(() => {
+      timer = setInterval(() => {
         start += increment;
         if (start >= value) {
           setCount(value);
@@ -29,8 +30,8 @@ function AnimatedCounter({ value, text }: { value: number, text: string }) {
           setCount(Math.floor(start));
         }
       }, 16);
-      return () => clearInterval(timer);
     }
+    return () => { if (timer) clearInterval(timer); };
   }, [isInView, value]);
 
   return (
@@ -80,13 +81,13 @@ export default function Home() {
       />
 
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section className="relative h-[100svh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary/95 via-secondary/80 to-transparent z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-secondary/95 via-secondary/80 to-transparent z-10"></div>
           <img 
-            src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1920&q=80" 
-            alt="Hero Construction" 
-            className="w-full h-full object-cover"
+            src={`${import.meta.env.BASE_URL}images/hero-3d.png`} 
+            alt="مؤسسة الخطيب للمقاولات - فريق تشطيب محترف" 
+            className="w-full h-full object-cover object-[center_top] md:object-[left_center]"
           />
           <div 
             className="absolute inset-0 z-10 opacity-30"
@@ -95,46 +96,55 @@ export default function Home() {
         </div>
 
         <div className="container mx-auto px-4 relative z-20">
-          <div className="max-w-3xl pt-20">
+          <div className="max-w-3xl pt-10">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white mb-4"
             >
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-              <span className="text-sm font-bold tracking-wider">الجودة والاحترافية عنواننا</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+              <span className="text-xs font-bold tracking-wider">الجودة والاحترافية عنواننا</span>
             </motion.div>
             
             <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-6"
+              className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4"
             >
               نبني أحلامكم <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-orange-400">بأساس متين</span> وتصاميم عصرية
+              <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-yellow-400">بأساس متين</span> وتصاميم عصرية
             </motion.h1>
             
             <motion.p 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg md:text-xl text-slate-200 mb-10 leading-relaxed max-w-2xl"
+              className="text-base md:text-lg text-slate-200 mb-6 leading-relaxed max-w-2xl"
             >
-              {COMPANY_INFO.name} تقدم كافة أعمال التشطيبات والديكور وصيانة المباني بلمسة احترافية تعكس شخصيتك، مع التزام تام بالمواعيد وأعلى معايير الجودة.
+              {COMPANY_INFO.name} تقدم كافة أعمال التشطيبات والديكور وصيانة المباني بلمسة احترافية تعكس شخصيتك، مع التزام تام بالمواعيد.
             </motion.p>
             
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-3"
             >
+              <Link href="/design">
+                <Button 
+                  size="lg" 
+                  className="bg-primary hover:bg-yellow-600 text-white px-6 py-5 text-base rounded-xl shadow-lg shadow-primary/30 hover:scale-105 transition-transform"
+                >
+                  صمم مساحتك مجاناً <Wand2 className="w-4 h-4 mr-2" />
+                </Button>
+              </Link>
               <Button 
                 onClick={() => openInquiry()}
                 size="lg" 
-                className="bg-primary hover:bg-orange-600 text-white px-8 py-6 text-lg rounded-xl shadow-lg shadow-primary/30 hover:scale-105 transition-transform"
+                variant="outline"
+                className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-5 text-base rounded-xl backdrop-blur-sm"
               >
                 اطلب استشارة مجانية
               </Button>
@@ -142,10 +152,10 @@ export default function Home() {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-8 py-6 text-lg rounded-xl backdrop-blur-sm"
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-5 text-base rounded-xl backdrop-blur-sm"
                 >
                   شاهد أعمالنا
-                  <ArrowLeft className="w-5 h-5 mr-2" />
+                  <ArrowLeft className="w-4 h-4 mr-2" />
                 </Button>
               </Link>
             </motion.div>
@@ -157,7 +167,7 @@ export default function Home() {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="hidden lg:flex absolute bottom-20 left-10 z-20 gap-4"
+          className="hidden lg:flex absolute bottom-10 left-10 z-20 gap-3"
         >
           <AnimatedCounter value={150} text="مشروع منجز" />
           <AnimatedCounter value={15} text="عام من الخبرة" />
@@ -463,8 +473,8 @@ export default function Home() {
                 className="group relative rounded-2xl overflow-hidden shadow-lg aspect-[4/3] block"
               >
                 <img 
-                  src={project.images?.[0] || project.image} 
-                  alt={project.title} 
+                  src={project.gallery?.[0] || project.image} 
+                  alt={project.title}  
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>

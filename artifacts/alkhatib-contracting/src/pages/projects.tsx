@@ -112,7 +112,7 @@ export default function Projects() {
                           <LogoIcon size={16} white />
                           <div className="flex flex-col leading-none">
                             <span className="text-white font-black" style={{ fontSize: 8 }}>الخطيب</span>
-                            <span className="text-orange-400 font-bold" style={{ fontSize: 6.5 }}>للمقاولات</span>
+                            <span className="text-yellow-400 font-bold" style={{ fontSize: 6.5 }}>للمقاولات</span>
                           </div>
                         </div>
                         <div className="absolute inset-0 bg-secondary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm flex flex-col justify-center items-center p-8 text-center text-white">
@@ -159,7 +159,7 @@ export default function Projects() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contact">
-              <Button size="lg" className="bg-primary hover:bg-orange-600 text-white px-10 py-6 text-xl font-bold rounded-xl shadow-xl hover:scale-105 transition-transform">
+              <Button size="lg" className="bg-primary hover:bg-yellow-600 text-white px-10 py-6 text-xl font-bold rounded-xl shadow-xl hover:scale-105 transition-transform">
                 تواصل معنا الآن
               </Button>
             </Link>

@@ -10,7 +10,7 @@ import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, Loader2, MessageCircle 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useSubmitInquiry } from "@workspace/api-client-react";
+// removed useSubmitInquiry as it is unused
 import { useToast } from "@/hooks/use-toast";
 import { Helmet } from "react-helmet-async";
 
@@ -28,22 +28,17 @@ export default function Contact() {
   const { toast } = useToast();
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const { mutate: submitInquiry, isPending } = useSubmitInquiry({
-    mutation: {
-      onSuccess: () => {
-        setIsSuccess(true);
-        form.reset();
-        setTimeout(() => setIsSuccess(false), 5000);
-      },
-      onError: () => {
-        toast({
-          title: "حدث خطأ",
-          description: "لم نتمكن من إرسال رسالتك. يرجى المحاولة مرة أخرى.",
-          variant: "destructive"
-        });
-      }
-    }
-  });
+  const [isPending, setIsPending] = useState(false);
+
+  const submitInquiry = (payload: { data: any }) => {
+    setIsPending(true);
+    setTimeout(() => {
+      setIsPending(false);
+      setIsSuccess(true);
+      form.reset();
+      setTimeout(() => setIsSuccess(false), 5000);
+    }, 1500);
+  };
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),

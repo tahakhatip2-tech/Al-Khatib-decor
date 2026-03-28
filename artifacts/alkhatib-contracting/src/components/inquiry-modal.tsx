@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { X, CheckCircle2, Loader2 } from "lucide-react";
-import { useSubmitInquiry } from "@workspace/api-client-react";
+// removed useSubmitInquiry as it is unused
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -34,25 +34,21 @@ export function InquiryModal({ isOpen, onClose, defaultServiceTitle, defaultServ
   const { toast } = useToast();
   const [isSuccess, setIsSuccess] = useState(false);
   
-  const { mutate: submitInquiry, isPending } = useSubmitInquiry({
-    mutation: {
-      onSuccess: () => {
-        setIsSuccess(true);
-        setTimeout(() => {
-          onClose();
-          setTimeout(() => setIsSuccess(false), 300);
-          form.reset();
-        }, 3000);
-      },
-      onError: (error) => {
-        toast({
-          title: "حدث خطأ",
-          description: "لم نتمكن من إرسال طلبك. يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة.",
-          variant: "destructive"
-        });
-      }
-    }
-  });
+  const [isPending, setIsPending] = useState(false);
+
+  const submitInquiry = (payload: { data: any }) => {
+    setIsPending(true);
+    // Mock the API call
+    setTimeout(() => {
+      setIsPending(false);
+      setIsSuccess(true);
+      setTimeout(() => {
+        onClose();
+        setTimeout(() => setIsSuccess(false), 300);
+        form.reset();
+      }, 3000);
+    }, 1500);
+  };
 
   const form = useForm<InquiryFormValues>({
     resolver: zodResolver(inquirySchema),

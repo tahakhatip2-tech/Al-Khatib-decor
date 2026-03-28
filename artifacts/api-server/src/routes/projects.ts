@@ -1,6 +1,7 @@
 import { Router, type IRouter } from "express";
 import { db, projectsTable } from "@workspace/db";
 import { eq, asc } from "drizzle-orm";
+import { authMiddleware } from "../middlewares/auth";
 
 const router: IRouter = Router();
 
@@ -29,7 +30,10 @@ router.get("/projects/:id", async (req, res) => {
   try {
     const id = Number(req.params.id);
     const [project] = await db.select().from(projectsTable).where(eq(projectsTable.id, id));
-    if (!project) return res.status(404).json({ error: "Project not found" });
+    if (!project) {
+      res.status(404).json({ error: "Project not found" });
+      return;
+    }
     res.json(formatProject(project));
   } catch (err) {
     req.log.error({ err }, "Error fetching project");
@@ -37,7 +41,7 @@ router.get("/projects/:id", async (req, res) => {
   }
 });
 
-router.post("/projects", async (req, res) => {
+router.post("/projects", authMiddleware, async (req, res) => {
   try {
     const { title, description, category, location, completionDate, area, images, features, isActive, isFeatured, sortOrder } = req.body;
     const [project] = await db.insert(projectsTable).values({
@@ -60,7 +64,7 @@ router.post("/projects", async (req, res) => {
   }
 });
 
-router.put("/projects/:id", async (req, res) => {
+router.put("/projects/:id", authMiddleware, async (req, res) => {
   try {
     const id = Number(req.params.id);
     const { title, description, category, location, completionDate, area, images, features, isActive, isFeatured, sortOrder } = req.body;
@@ -78,7 +82,10 @@ router.put("/projects/:id", async (req, res) => {
       sortOrder: sortOrder ?? 0,
       updatedAt: new Date(),
     }).where(eq(projectsTable.id, id)).returning();
-    if (!project) return res.status(404).json({ error: "Project not found" });
+    if (!project) {
+      res.status(404).json({ error: "Project not found" });
+      return;
+    }
     res.json(formatProject(project));
   } catch (err) {
     req.log.error({ err }, "Error updating project");
@@ -86,11 +93,14 @@ router.put("/projects/:id", async (req, res) => {
   }
 });
 
-router.delete("/projects/:id", async (req, res) => {
+router.delete("/projects/:id", authMiddleware, async (req, res) => {
   try {
     const id = Number(req.params.id);
     const [deleted] = await db.delete(projectsTable).where(eq(projectsTable.id, id)).returning();
-    if (!deleted) return res.status(404).json({ error: "Project not found" });
+    if (!deleted) {
+      res.status(404).json({ error: "Project not found" });
+      return;
+    }
     res.json({ success: true, message: "Project deleted successfully" });
   } catch (err) {
     req.log.error({ err }, "Error deleting project");

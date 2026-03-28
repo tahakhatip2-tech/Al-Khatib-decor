@@ -15,6 +15,7 @@ import BlogDetail from "@/pages/blog-detail";
 import About from "@/pages/about";
 import Contact from "@/pages/contact";
 import Admin from "@/pages/admin";
+import DesignTool from "@/pages/design-tool";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient({
@@ -39,6 +40,7 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/contact" component={Contact} />
       <Route path="/admin" component={Admin} />
+      <Route path="/design" component={DesignTool} />
       <Route component={NotFound} />
     </Switch>
   );

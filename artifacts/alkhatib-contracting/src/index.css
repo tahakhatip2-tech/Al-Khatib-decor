@@ -52,7 +52,7 @@
   
   --border: 226 20% 90%;
   --input: 226 20% 90%;
-  --ring: 25 95% 53%;
+  --ring: 45 93% 47%;
 
   --card: 0 0% 100%;
   --card-foreground: 226 50% 15%;
@@ -62,8 +62,8 @@
   --popover-foreground: 226 50% 15%;
   --popover-border: 226 20% 90%;
 
-  /* Primary: Orange (#F97316) */
-  --primary: 25 95% 53%;
+  /* Primary: Yellow */
+  --primary: 45 93% 47%;
   --primary-foreground: 0 0% 100%;
 
   /* Secondary: Deep Blue (#1E40AF) */
@@ -74,9 +74,9 @@
   --muted: 226 20% 95%;
   --muted-foreground: 226 20% 45%;
 
-  /* Accent (Lighter Orange for highlights) */
-  --accent: 25 95% 95%;
-  --accent-foreground: 25 95% 45%;
+  /* Accent (Lighter Yellow for highlights) */
+  --accent: 45 95% 95%;
+  --accent-foreground: 45 93% 47%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
@@ -108,11 +108,11 @@
 /* Custom Utilities for RTL spacing and nice effects */
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-l from-primary to-orange-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-l from-primary to-yellow-400;
   }
   
   .bg-gradient-primary {
-    @apply bg-gradient-to-l from-primary to-orange-500;
+    @apply bg-gradient-to-l from-primary to-yellow-500;
   }
 
   .bg-gradient-secondary {

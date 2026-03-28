@@ -39,7 +39,7 @@ export function ServiceCard({ id, title, description, image, icon: Icon, onInqui
             </svg>
             <div className="flex flex-col leading-none">
               <span className="text-white font-black" style={{ fontSize: 8 }}>الخطيب</span>
-              <span className="text-orange-400 font-bold" style={{ fontSize: 6.5 }}>للمقاولات</span>
+              <span className="text-yellow-400 font-bold" style={{ fontSize: 6.5 }}>للمقاولات</span>
             </div>
           </div>
         </div>

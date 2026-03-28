@@ -159,7 +159,7 @@ export default function Services() {
             <Button 
               size="lg" 
               onClick={() => openInquiry("استفسار عام", "عام")}
-              className="bg-primary hover:bg-orange-600 text-white px-8 py-6 text-lg rounded-xl shadow-lg shadow-primary/30"
+              className="bg-primary hover:bg-yellow-600 text-white px-8 py-6 text-lg rounded-xl shadow-lg shadow-primary/30"
             >
               اطلب عرض سعر مجاني
             </Button>

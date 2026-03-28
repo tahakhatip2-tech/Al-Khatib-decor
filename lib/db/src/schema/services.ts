@@ -1,19 +1,20 @@
-import { pgTable, text, serial, timestamp, boolean, integer, jsonb } from "drizzle-orm/pg-core";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
+import { sql } from "drizzle-orm";
 
-export const servicesTable = pgTable("services", {
-  id: serial("id").primaryKey(),
+export const servicesTable = sqliteTable("services", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
   description: text("description").notNull(),
   category: text("category").notNull(),
   icon: text("icon"),
-  images: jsonb("images").$type<string[]>().default([]),
-  features: jsonb("features").$type<string[]>().default([]),
-  isActive: boolean("is_active").notNull().default(true),
+  images: text("images", { mode: 'json' }).$type<string[]>().notNull().default(sql`'[]'`),
+  features: text("features", { mode: 'json' }).$type<string[]>().notNull().default(sql`'[]'`),
+  isActive: integer("is_active", { mode: 'boolean' }).notNull().default(true),
   sortOrder: integer("sort_order").notNull().default(0),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  createdAt: integer("created_at", { mode: 'timestamp' }).notNull().default(sql`(CAST(strftime('%s', 'now') AS INTEGER))`),
+  updatedAt: integer("updated_at", { mode: 'timestamp' }).notNull().default(sql`(CAST(strftime('%s', 'now') AS INTEGER))`),
 });
 
 export const insertServiceSchema = createInsertSchema(servicesTable).omit({

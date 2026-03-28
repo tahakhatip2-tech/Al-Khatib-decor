@@ -1,6 +1,7 @@
 import { Router, type IRouter } from "express";
 import { db, servicesTable } from "@workspace/db";
 import { eq, asc } from "drizzle-orm";
+import { authMiddleware } from "../middlewares/auth";
 
 const router: IRouter = Router();
 
@@ -27,7 +28,10 @@ router.get("/services/:id", async (req, res) => {
   try {
     const id = Number(req.params.id);
     const [service] = await db.select().from(servicesTable).where(eq(servicesTable.id, id));
-    if (!service) return res.status(404).json({ error: "Service not found" });
+    if (!service) {
+      res.status(404).json({ error: "Service not found" });
+      return;
+    }
     res.json(formatService(service));
   } catch (err) {
     req.log.error({ err }, "Error fetching service");
@@ -35,7 +39,7 @@ router.get("/services/:id", async (req, res) => {
   }
 });
 
-router.post("/services", async (req, res) => {
+router.post("/services", authMiddleware, async (req, res) => {
   try {
     const { title, description, category, icon, images, features, isActive, sortOrder } = req.body;
     const [service] = await db.insert(servicesTable).values({
@@ -55,7 +59,7 @@ router.post("/services", async (req, res) => {
   }
 });
 
-router.put("/services/:id", async (req, res) => {
+router.put("/services/:id", authMiddleware, async (req, res) => {
   try {
     const id = Number(req.params.id);
     const { title, description, category, icon, images, features, isActive, sortOrder } = req.body;
@@ -70,7 +74,10 @@ router.put("/services/:id", async (req, res) => {
       sortOrder: sortOrder ?? 0,
       updatedAt: new Date(),
     }).where(eq(servicesTable.id, id)).returning();
-    if (!service) return res.status(404).json({ error: "Service not found" });
+    if (!service) {
+      res.status(404).json({ error: "Service not found" });
+      return;
+    }
     res.json(formatService(service));
   } catch (err) {
     req.log.error({ err }, "Error updating service");
@@ -78,11 +85,14 @@ router.put("/services/:id", async (req, res) => {
   }
 });
 
-router.delete("/services/:id", async (req, res) => {
+router.delete("/services/:id", authMiddleware, async (req, res) => {
   try {
     const id = Number(req.params.id);
     const [deleted] = await db.delete(servicesTable).where(eq(servicesTable.id, id)).returning();
-    if (!deleted) return res.status(404).json({ error: "Service not found" });
+    if (!deleted) {
+      res.status(404).json({ error: "Service not found" });
+      return;
+    }
     res.json({ success: true, message: "Service deleted successfully" });
   } catch (err) {
     req.log.error({ err }, "Error deleting service");
