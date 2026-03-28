@@ -22,7 +22,7 @@ export function LogoIcon({ size = 44 }: { size?: number }) {
       width={size} 
       height={size} 
       className="object-contain"
-      style={{ borderRadius: '8px' }}
+      style={{ borderRadius: '8px', mixBlendMode: 'multiply' }}
     />
   );
 }
@@ -36,18 +36,15 @@ export function Logo({ variant = "full", size = "md", className = "" }: LogoProp
 
   if (variant === "watermark") {
     return (
-      <div
-        className={`flex items-center gap-1.5 bg-secondary/80 backdrop-blur-sm rounded-lg px-2 py-1 ${className}`}
-        style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
-      >
-        <LogoIcon size={20} />
+      <div className={`opacity-80 mix-blend-multiply ${className}`}>
+        <LogoIcon size={40} />
       </div>
     );
   }
 
   if (variant === "white") {
     return (
-      <div className={`flex items-center gap-3 ${className} bg-white/10 p-2 rounded-xl backdrop-blur-sm`}>
+      <div className={`flex items-center gap-3 ${className} bg-white p-2 rounded-xl border-2 border-white/20`} style={{ mixBlendMode: 'normal' }}>
         <LogoIcon size={s} />
       </div>
     );
@@ -55,7 +52,7 @@ export function Logo({ variant = "full", size = "md", className = "" }: LogoProp
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      <LogoIcon size={s * 1.2} />
+      <LogoIcon size={s * 1.5} />
     </div>
   );
 }
