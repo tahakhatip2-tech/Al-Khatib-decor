@@ -302,8 +302,8 @@ export default function Home() {
             </div>
             <div className="lg:w-1/2 relative">
               <div className="grid grid-cols-2 gap-4">
-                <img src="https://images.unsplash.com/photo-1541888086925-0c770c4013fd?w=800&q=80" className="rounded-2xl w-full h-48 object-cover mt-8 shadow-lg" alt="Construction 1" />
-                <img src="https://images.unsplash.com/photo-1504307651254-35680f356fce?w=800&q=80" className="rounded-2xl w-full h-64 object-cover shadow-lg" alt="Construction 2" />
+                <img src={`${import.meta.env.BASE_URL}images/story-1.png`} className="rounded-2xl w-full h-48 object-cover mt-8 shadow-lg" alt="Construction 1" />
+                <img src={`${import.meta.env.BASE_URL}images/service-painting.png`} className="rounded-2xl w-full h-64 object-cover shadow-lg" alt="Construction 2" />
               </div>
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-full shadow-2xl">
                 <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white">
@@ -362,7 +362,7 @@ export default function Home() {
             <div className="lg:w-1/2 relative">
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
                 <img 
-                  src="https://pixabay.com/get/g7eecc74e04386bc1b83919bd663a337032898b4f699f5004ac3a106281f3787495b7ff6a217fe67251ebfa5f13c5908d14eb602b21bf2082784a8adfbe7e841c_1280.jpg" 
+                  src={`${import.meta.env.BASE_URL}images/hero-3d.png`} 
                   alt="Why Choose Us" 
                   className="w-full h-auto"
                 />
