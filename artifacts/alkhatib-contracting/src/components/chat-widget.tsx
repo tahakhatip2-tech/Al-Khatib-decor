@@ -290,7 +290,7 @@ export function ChatWidget() {
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(o => !o)}
-        className="fixed bottom-6 left-4 sm:left-6 z-[200] w-16 h-16 bg-gradient-to-br from-primary to-yellow-600 text-white rounded-2xl shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
+        className="fixed bottom-6 left-4 sm:left-6 z-[200] w-14 h-14 bg-gradient-to-br from-primary to-yellow-600 text-white rounded-full shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
         aria-label="فتح المحادثة"
       >
         {isOpen ? (

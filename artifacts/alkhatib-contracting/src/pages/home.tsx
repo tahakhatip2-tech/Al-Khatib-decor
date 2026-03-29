@@ -10,6 +10,41 @@ import { ArrowLeft, CheckCircle2, ChevronLeft, Building, HardHat, ShieldCheck, T
 import { Helmet } from "react-helmet-async";
 import { useRef } from "react";
 
+function TypewriterBox({ text, speed = 50, delay = 0, className = "", onComplete, cursor = true }: { text: string, speed?: number, delay?: number, className?: string, onComplete?: () => void, cursor?: boolean }) {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    let index = 0;
+    
+    timeout = setTimeout(() => {
+      setIsTyping(true);
+      const timer = setInterval(() => {
+        if (index <= text.length) {
+          setDisplayedText(text.slice(0, index));
+          index++;
+        } else {
+          clearInterval(timer);
+          setIsTyping(false);
+          if (onComplete) onComplete();
+        }
+      }, speed);
+      return () => clearInterval(timer);
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text, speed, delay]);
+
+  return (
+    <span className={className}>
+      {displayedText}
+      {cursor && isTyping && <span className="inline-block w-[2px] h-[1em] bg-primary ml-1 align-middle animate-pulse"></span>}
+    </span>
+  );
+}
+
 function AnimatedCounter({ value, text }: { value: number, text: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -45,6 +80,7 @@ function AnimatedCounter({ value, text }: { value: number, text: string }) {
 export default function Home() {
   const [modalState, setModalState] = useState<{isOpen: boolean, serviceTitle?: string, category?: string}>({ isOpen: false });
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [typingStage, setTypingStage] = useState(0);
 
   const openInquiry = (serviceTitle?: string, category?: string) => {
     setModalState({ isOpen: true, serviceTitle, category });
@@ -111,25 +147,50 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight mb-3"
+              className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight mb-3 min-h-[90px] md:min-h-[110px]"
             >
-              نبني أحلامكم <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-yellow-400">بأساس متين</span> وتصاميم عصرية
+              <TypewriterBox text="نبني أحلامكم " speed={50} delay={400} onComplete={() => setTypingStage(1)} cursor={typingStage === 0} />
+              {typingStage >= 1 && <br />}
+              {typingStage >= 1 && (
+                <TypewriterBox 
+                  text="بأساس متين " 
+                  speed={50}
+                  className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-yellow-400"
+                  onComplete={() => setTypingStage(2)}
+                  cursor={typingStage === 1}
+                />
+              )}
+              {typingStage >= 2 && (
+                <TypewriterBox 
+                  text="وتصاميم عصرية" 
+                  speed={50}
+                  onComplete={() => setTypingStage(3)}
+                  cursor={typingStage === 2}
+                />
+              )}
             </motion.h1>
             
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm md:text-base text-slate-200 mb-5 leading-relaxed max-w-xl"
-            >
-              {COMPANY_INFO.name} تقدم كافة أعمال التشطيبات والديكور وصيانة المباني بلمسة احترافية تعكس شخصيتك، مع التزام تام بالمواعيد.
-            </motion.p>
+            <div className="min-h-[70px] md:min-h-[50px] mb-5">
+              {typingStage >= 3 && (
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-sm md:text-base text-slate-200 leading-relaxed max-w-xl"
+                >
+                  <TypewriterBox 
+                    text={`${COMPANY_INFO.name} تقدم كافة أعمال التشطيبات والديكور وصيانة المباني بلمسة احترافية تعكس شخصيتك، مع التزام تام بالمواعيد.`} 
+                    speed={25}
+                    onComplete={() => setTypingStage(4)}
+                    cursor={typingStage === 3}
+                  />
+                </motion.p>
+              )}
+            </div>
             
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: typingStage >= 4 ? 1 : 0, y: typingStage >= 4 ? 0 : 10 }}
+              transition={{ duration: 0.5 }}
               className="flex flex-wrap gap-2.5"
             >
               <Link href="/design">
