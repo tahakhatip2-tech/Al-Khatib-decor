@@ -260,15 +260,14 @@ export function Layout({ children }: { children: ReactNode }) {
 
           </div>
 
-          <div className="border-t border-white/10 pt-4 flex flex-col md:flex-row justify-between items-center gap-4 py-2 text-xs md:text-sm">
-            <p>© {new Date().getFullYear()} مؤسسة الخطيب للمقاولات. جميع الحقوق محفوظة.</p>
-            <div className="flex items-center gap-4">
-              <Link href="/admin" className="hover:text-primary transition-colors opacity-50 hover:opacity-100 flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3" />
-                لوحة التحكم
-              </Link>
-              <p className="font-medium text-yellow-400">تمت البرمجة بواسطة المهندس طه الخطيب</p>
-            </div>
+          <div className="border-t border-white/10 pt-5 pb-24 md:pb-4 flex flex-col items-center justify-center gap-2 text-center text-xs">
+            <p className="whitespace-nowrap">© {new Date().getFullYear()} مؤسسة الخطيب للمقاولات. جميع الحقوق محفوظة.</p>
+            <p className="font-medium text-yellow-400 whitespace-nowrap text-[11px]">تمت البرمجة بواسطة المهندس طه الخطيب</p>
+            
+            <Link href="/admin" className="hover:text-primary transition-colors opacity-30 hover:opacity-100 flex items-center gap-1 mt-1 text-[10px]">
+              <ShieldCheck className="w-3 h-3" />
+              لوحة التحكم
+            </Link>
           </div>
         </div>
       </footer>
