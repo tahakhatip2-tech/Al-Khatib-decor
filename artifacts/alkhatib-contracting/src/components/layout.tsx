@@ -267,7 +267,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 <ShieldCheck className="w-3 h-3" />
                 لوحة التحكم
               </Link>
-              <p className="font-medium text-yellow-400">بإشراف وتوقيع المهندس طه الخطيب</p>
+              <p className="font-medium text-yellow-400">تمت البرمجة بواسطة المهندس طه الخطيب</p>
             </div>
           </div>
         </div>
