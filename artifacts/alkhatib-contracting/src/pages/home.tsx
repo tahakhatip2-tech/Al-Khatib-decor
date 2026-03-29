@@ -16,11 +16,12 @@ function TypewriterBox({ text, speed = 50, delay = 0, className = "", onComplete
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
+    let timer: ReturnType<typeof setInterval>;
     let index = 0;
     
     timeout = setTimeout(() => {
       setIsTyping(true);
-      const timer = setInterval(() => {
+      timer = setInterval(() => {
         if (index <= text.length) {
           setDisplayedText(text.slice(0, index));
           index++;
@@ -30,10 +31,12 @@ function TypewriterBox({ text, speed = 50, delay = 0, className = "", onComplete
           if (onComplete) onComplete();
         }
       }, speed);
-      return () => clearInterval(timer);
     }, delay);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      if (timer) clearInterval(timer);
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text, speed, delay]);
 
