@@ -189,40 +189,37 @@ export function Layout({ children }: { children: ReactNode }) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-secondary text-slate-300 pt-16 pb-8 border-t-[8px] border-primary relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-
-            {/* Brand */}
-            <div className="space-y-6">
-              <Link href="/" className="inline-block hover:opacity-90 transition-opacity">
+      <footer className="bg-secondary text-slate-300 pt-10 pb-6">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div className="space-y-4">
+              <Link href="/" className="inline-block hover:opacity-90">
                 <Logo variant="white" size="md" />
               </Link>
               <p className="text-sm leading-relaxed">
                 مؤسسة رائدة في مجال المقاولات والتشطيبات والديكور الداخلي والخارجي، نقدم خدمات متكاملة بأعلى معايير الجودة والاحترافية لتلبية طموحات عملائنا.
               </p>
               <div className="flex gap-3">
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                  <FacebookIcon className="w-5 h-5" />
+                <a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                  <FacebookIcon className="w-4 h-4" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                  <InstagramIcon className="w-5 h-5" />
+                <a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                  <InstagramIcon className="w-4 h-4" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                  <TwitterXIcon className="w-5 h-5" />
+                <a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                  <TwitterXIcon className="w-4 h-4" />
                 </a>
               </div>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-white text-lg font-bold mb-6 border-b border-white/10 pb-2 inline-block">روابط سريعة</h3>
-              <ul className="space-y-3">
+              <h3 className="text-white text-base font-bold mb-4 border-b border-white/10 pb-1 md:pb-2 inline-block">روابط سريعة</h3>
+              <ul className="space-y-2 text-sm">
                 {NAV_LINKS.map(link => (
                   <li key={link.href}>
                     <Link href={link.href} className="flex items-center gap-2 hover:text-primary transition-colors group">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></span>
+                      <span className="w-1 h-1 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></span>
                       {link.label}
                     </Link>
                   </li>
@@ -232,30 +229,30 @@ export function Layout({ children }: { children: ReactNode }) {
 
             {/* Services */}
             <div>
-              <h3 className="text-white text-lg font-bold mb-6 border-b border-white/10 pb-2 inline-block">أبرز خدماتنا</h3>
-              <ul className="space-y-3">
-                <li><Link href="/services/gypsum-decor" className="hover:text-primary transition-colors">الجبس والديكور الداخلي</Link></li>
-                <li><Link href="/services/marble-wood-alt" className="hover:text-primary transition-colors">بديل الرخام والخشب</Link></li>
-                <li><Link href="/services/all-painting" className="hover:text-primary transition-colors">أعمال الدهانات</Link></li>
-                <li><Link href="/services/floor-polishing" className="hover:text-primary transition-colors">جلي البلاط والرخام</Link></li>
-                <li><Link href="/services/building-maintenance" className="hover:text-primary transition-colors">صيانة وترميم الأبنية</Link></li>
+              <h3 className="text-white text-base font-bold mb-4 border-b border-white/10 pb-1 md:pb-2 inline-block">أبرز خدماتنا</h3>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/services/gypsum-decor" className="hover:text-primary transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary/30"></span>الجبس والديكور الداخلي</Link></li>
+                <li><Link href="/services/marble-wood-alt" className="hover:text-primary transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary/30"></span>بديل الرخام والخشب</Link></li>
+                <li><Link href="/services/all-painting" className="hover:text-primary transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary/30"></span>أعمال الدهانات</Link></li>
+                <li><Link href="/services/floor-polishing" className="hover:text-primary transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary/30"></span>جلي البلاط والرخام</Link></li>
+                <li><Link href="/services/building-maintenance" className="hover:text-primary transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary/30"></span>صيانة و ترميم الأبنية</Link></li>
               </ul>
             </div>
 
             {/* Contact */}
             <div>
-              <h3 className="text-white text-lg font-bold mb-6 border-b border-white/10 pb-2 inline-block">تواصل معنا</h3>
-              <ul className="space-y-4">
+              <h3 className="text-white text-base font-bold mb-4 border-b border-white/10 pb-1 md:pb-2 inline-block">تواصل معنا</h3>
+              <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-primary shrink-0 mt-1" />
                   <span>{COMPANY_INFO.address}</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-primary shrink-0" />
+                  <Phone className="w-4 h-4 text-primary shrink-0" />
                   <a href={`tel:${COMPANY_INFO.phone}`} className="hover:text-primary transition-colors" dir="ltr">{COMPANY_INFO.phoneDisplay}</a>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <Clock className="w-4 h-4 text-primary shrink-0 mt-1" />
                   <span>{COMPANY_INFO.hours}</span>
                 </li>
               </ul>
@@ -263,14 +260,14 @@ export function Layout({ children }: { children: ReactNode }) {
 
           </div>
 
-          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+          <div className="border-t border-white/10 pt-4 flex flex-col md:flex-row justify-between items-center gap-4 py-2 text-xs md:text-sm">
             <p>© {new Date().getFullYear()} مؤسسة الخطيب للمقاولات. جميع الحقوق محفوظة.</p>
             <div className="flex items-center gap-4">
               <Link href="/admin" className="hover:text-primary transition-colors opacity-50 hover:opacity-100 flex items-center gap-1">
-                <ShieldCheck className="w-4 h-4" />
+                <ShieldCheck className="w-3 h-3" />
                 لوحة التحكم
               </Link>
-              <p>تصميم وتطوير بكل ❤️</p>
+              <p className="font-medium text-yellow-400">بإشراف وتوقيع المهندس طه الخطيب</p>
             </div>
           </div>
         </div>
