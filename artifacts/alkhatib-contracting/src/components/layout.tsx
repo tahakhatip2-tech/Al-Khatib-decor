@@ -279,30 +279,12 @@ export function Layout({ children }: { children: ReactNode }) {
       {/* AI Chat Widget */}
       <ChatWidget />
       
-      {/* Floating Design Tool Drop/FAB */}
-      {location !== '/design' && (
-        <Link 
-          href="/design"
-          className="fixed bottom-6 right-4 sm:right-6 z-[200] group flex items-center gap-3 bg-secondary text-white rounded-full shadow-xl shadow-secondary/30 hover:-translate-y-1 transition-all overflow-hidden"
-          title="صمم مساحتك مجاناً"
-        >
-          <div className="flex items-center gap-2 pl-4 pr-1 py-1">
-            <span className="font-bold text-sm lg:text-base hidden sm:block whitespace-nowrap opacity-0 group-hover:opacity-100 -ml-2 group-hover:ml-0 transition-all text-yellow-400">
-              صمم مساحتك بالذكاء الاصطناعي مجاناً
-            </span>
-            <div className="w-14 h-14 bg-gradient-to-r from-primary to-yellow-500 rounded-full flex items-center justify-center shrink-0">
-              <Wand2 className="w-6 h-6 animate-pulse" />
-            </div>
-          </div>
-        </Link>
-      )}
-
       {/* Floating WhatsApp Button */}
       <a
         href="https://wa.me/962782633162"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 left-4 sm:left-6 z-[200] flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-xl shadow-[#25D366]/30 hover:-translate-y-1 transition-all overflow-hidden"
+        className="fixed bottom-6 right-4 sm:right-6 z-[200] flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-xl shadow-[#25D366]/30 hover:-translate-y-1 transition-all overflow-hidden"
         title="تواصل معنا عبر واتساب"
       >
         <WhatsAppIcon className="w-8 h-8 relative z-10" />
