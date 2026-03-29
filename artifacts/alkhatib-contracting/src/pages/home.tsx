@@ -96,12 +96,12 @@ export default function Home() {
         </div>
 
         <div className="container mx-auto px-4 relative z-20">
-          <div className="max-w-3xl pt-10">
+          <div className="max-w-2xl pt-4 mt-8 md:mt-0">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white mb-4"
+              className="inline-flex items-center gap-1.5 px-3 py-1 mb-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
               <span className="text-xs font-bold tracking-wider">الجودة والاحترافية عنواننا</span>
@@ -111,7 +111,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4"
+              className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight mb-3"
             >
               نبني أحلامكم <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-yellow-400">بأساس متين</span> وتصاميم عصرية
@@ -121,7 +121,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base md:text-lg text-slate-200 mb-6 leading-relaxed max-w-2xl"
+              className="text-sm md:text-base text-slate-200 mb-5 leading-relaxed max-w-xl"
             >
               {COMPANY_INFO.name} تقدم كافة أعمال التشطيبات والديكور وصيانة المباني بلمسة احترافية تعكس شخصيتك، مع التزام تام بالمواعيد.
             </motion.p>
@@ -130,29 +130,29 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap gap-3"
+              className="flex flex-wrap gap-2.5"
             >
               <Link href="/design">
                 <Button 
-                  size="lg" 
-                  className="bg-primary hover:bg-yellow-600 text-white px-6 py-5 text-base rounded-xl shadow-lg shadow-primary/30 hover:scale-105 transition-transform"
+                  size="default" 
+                  className="bg-primary hover:bg-yellow-600 text-white px-5 py-3 text-sm rounded-xl shadow-lg shadow-primary/30 hover:scale-105 transition-transform"
                 >
                   صمم مساحتك مجاناً <Wand2 className="w-4 h-4 mr-2" />
                 </Button>
               </Link>
               <Button 
                 onClick={() => openInquiry()}
-                size="lg" 
+                size="default" 
                 variant="outline"
-                className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-5 text-base rounded-xl backdrop-blur-sm"
+                className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-5 py-3 text-sm rounded-xl backdrop-blur-sm"
               >
                 اطلب استشارة مجانية
               </Button>
               <Link href="/projects">
                 <Button 
-                  size="lg" 
+                  size="default" 
                   variant="outline" 
-                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-5 text-base rounded-xl backdrop-blur-sm"
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-5 py-3 text-sm rounded-xl backdrop-blur-sm"
                 >
                   شاهد أعمالنا
                   <ArrowLeft className="w-4 h-4 mr-2" />

@@ -85,8 +85,8 @@ export function Layout({ children }: { children: ReactNode }) {
       {/* Main Navbar */}
       <header
         className={`sticky top-0 z-40 transition-all duration-300 ${isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-md py-3"
-            : "bg-white py-5"
+            ? "bg-white/95 backdrop-blur-md shadow-md py-2"
+            : "bg-white py-3 border-b border-slate-100"
           }`}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">

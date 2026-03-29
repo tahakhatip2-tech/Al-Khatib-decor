@@ -18,11 +18,10 @@ export function LogoIcon({ size = 44 }: { size?: number }) {
   return (
     <img 
       src={`${import.meta.env.BASE_URL}images/logo.png`} 
-      alt="الخطيب للمقاولات" 
+      alt="الخطيب للمقاولات الديكور" 
       width={size} 
       height={size} 
-      className="object-contain"
-      style={{ borderRadius: '8px', mixBlendMode: 'multiply' }}
+      className="object-cover rounded-full border-2 border-yellow-400 shadow-sm"
     />
   );
 }
@@ -44,15 +43,31 @@ export function Logo({ variant = "full", size = "md", className = "" }: LogoProp
 
   if (variant === "white") {
     return (
-      <div className={`flex items-center gap-3 ${className} bg-white p-2 rounded-xl border-2 border-white/20`} style={{ mixBlendMode: 'normal' }}>
+      <div className={`flex items-center gap-3 ${className} bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20`} style={{ mixBlendMode: 'normal' }}>
         <LogoIcon size={s} />
+        <div className="flex flex-col leading-tight">
+          <span className="font-black text-white" style={{ fontSize: 16 }}>
+            مؤسسة الخطيب
+          </span>
+          <span className="font-semibold text-yellow-400 uppercase tracking-widest" style={{ fontSize: 10 }}>
+            للمقاولات والديكور
+          </span>
+        </div>
       </div>
     );
   }
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      <LogoIcon size={s * 1.5} />
+      <LogoIcon size={s * 1.2} />
+      <div className="flex flex-col leading-tight">
+        <span className="font-black text-secondary" style={{ fontSize: 18 }}>
+          مؤسسة الخطيب
+        </span>
+        <span className="font-semibold text-primary uppercase tracking-widest" style={{ fontSize: 11 }}>
+          للمقاولات والديكور
+        </span>
+      </div>
     </div>
   );
 }
