@@ -17,7 +17,7 @@ const sizes = {
 export function LogoIcon({ size = 64, className = "" }: { size?: number, className?: string }) {
   return (
     <img 
-      src={`${import.meta.env.BASE_URL}images/logo.png?v=2`} 
+      src={`${import.meta.env.BASE_URL}taha.png`} 
       alt="الخطيب للمقاولات الديكور" 
       width={size} 
       height={size} 
