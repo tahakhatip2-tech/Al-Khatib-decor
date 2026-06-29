@@ -169,7 +169,7 @@ export function Layout({ children }: { children: ReactNode }) {
                   </Link>
                 );
               })}
-              <div className="pt-4 mt-2 border-t border-slate-100">
+              <div className="pt-4 mt-2 border-t border-slate-100 flex flex-col gap-2">
                 <a
                   href={`tel:${COMPANY_INFO.phone}`}
                   className="w-full bg-primary text-white p-3 rounded-xl font-bold flex items-center justify-center gap-2"
@@ -177,6 +177,13 @@ export function Layout({ children }: { children: ReactNode }) {
                   <Phone className="w-5 h-5" />
                   اتصل بنا الآن
                 </a>
+                <Link
+                  href="/hr"
+                  className="w-full bg-slate-100 text-slate-700 p-3 rounded-xl font-bold flex items-center justify-center gap-2 mt-1"
+                >
+                  <ShieldCheck className="w-5 h-5" />
+                  بوابة الموظفين
+                </Link>
               </div>
             </div>
           </motion.div>
@@ -264,10 +271,17 @@ export function Layout({ children }: { children: ReactNode }) {
             <p className="whitespace-nowrap">© {new Date().getFullYear()} مؤسسة الخطيب للمقاولات. جميع الحقوق محفوظة.</p>
             <p className="font-medium text-yellow-400 whitespace-nowrap text-[11px]">تمت البرمجة بواسطة المهندس طه الخطيب</p>
             
-            <Link href="/admin" className="hover:text-primary transition-colors opacity-30 hover:opacity-100 flex items-center gap-1 mt-1 text-[10px]">
-              <ShieldCheck className="w-3 h-3" />
-              لوحة التحكم
-            </Link>
+            <div className="flex items-center gap-4 mt-1 text-[10px]">
+              <Link href="/admin" className="hover:text-primary transition-colors opacity-30 hover:opacity-100 flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3" />
+                إدارة الموقع
+              </Link>
+              <span className="opacity-30">|</span>
+              <Link href="/hr" className="hover:text-primary transition-colors opacity-30 hover:opacity-100 flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3" />
+                بوابة الموظفين
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
