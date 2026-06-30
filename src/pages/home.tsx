@@ -10,6 +10,44 @@ import { ArrowLeft, CheckCircle2, ChevronLeft, Building, HardHat, ShieldCheck, T
 import { Helmet } from "react-helmet-async";
 import { useRef } from "react";
 
+function TypewriterBox({ text, speed = 50, delay = 0, className = "", onComplete, cursor = true }: { text: string, speed?: number, delay?: number, className?: string, onComplete?: () => void, cursor?: boolean }) {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    let timer: ReturnType<typeof setInterval>;
+    let index = 0;
+    
+    timeout = setTimeout(() => {
+      setIsTyping(true);
+      timer = setInterval(() => {
+        if (index <= text.length) {
+          setDisplayedText(text.slice(0, index));
+          index++;
+        } else {
+          clearInterval(timer);
+          setIsTyping(false);
+          if (onComplete) onComplete();
+        }
+      }, speed);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeout);
+      if (timer) clearInterval(timer);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text, speed, delay]);
+
+  return (
+    <span className={className}>
+      {displayedText}
+      {cursor && isTyping && <span className="inline-block w-[2px] h-[1em] bg-primary ml-1 align-middle animate-pulse"></span>}
+    </span>
+  );
+}
+
 function AnimatedCounter({ value, text }: { value: number, text: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -45,6 +83,7 @@ function AnimatedCounter({ value, text }: { value: number, text: string }) {
 export default function Home() {
   const [modalState, setModalState] = useState<{isOpen: boolean, serviceTitle?: string, category?: string}>({ isOpen: false });
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [typingStage, setTypingStage] = useState(0);
 
   const openInquiry = (serviceTitle?: string, category?: string) => {
     setModalState({ isOpen: true, serviceTitle, category });
@@ -96,12 +135,12 @@ export default function Home() {
         </div>
 
         <div className="container mx-auto px-4 relative z-20">
-          <div className="max-w-3xl pt-10">
+          <div className="max-w-2xl pt-4 mt-8 md:mt-0">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white mb-4"
+              className="inline-flex items-center gap-1.5 px-3 py-1 mb-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
               <span className="text-xs font-bold tracking-wider">الجودة والاحترافية عنواننا</span>
@@ -111,48 +150,73 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4"
+              className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight mb-3 min-h-[90px] md:min-h-[110px]"
             >
-              نبني أحلامكم <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-yellow-400">بأساس متين</span> وتصاميم عصرية
+              <TypewriterBox text="نبني أحلامكم " speed={50} delay={400} onComplete={() => setTypingStage(1)} cursor={typingStage === 0} />
+              {typingStage >= 1 && <br />}
+              {typingStage >= 1 && (
+                <TypewriterBox 
+                  text="بأساس متين " 
+                  speed={50}
+                  className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-yellow-400"
+                  onComplete={() => setTypingStage(2)}
+                  cursor={typingStage === 1}
+                />
+              )}
+              {typingStage >= 2 && (
+                <TypewriterBox 
+                  text="وتصاميم عصرية" 
+                  speed={50}
+                  onComplete={() => setTypingStage(3)}
+                  cursor={typingStage === 2}
+                />
+              )}
             </motion.h1>
             
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base md:text-lg text-slate-200 mb-6 leading-relaxed max-w-2xl"
-            >
-              {COMPANY_INFO.name} تقدم كافة أعمال التشطيبات والديكور وصيانة المباني بلمسة احترافية تعكس شخصيتك، مع التزام تام بالمواعيد.
-            </motion.p>
+            <div className="min-h-[70px] md:min-h-[50px] mb-5">
+              {typingStage >= 3 && (
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-sm md:text-base text-slate-200 leading-relaxed max-w-xl"
+                >
+                  <TypewriterBox 
+                    text={`${COMPANY_INFO.name} تقدم كافة أعمال التشطيبات والديكور وصيانة المباني بلمسة احترافية تعكس شخصيتك، مع التزام تام بالمواعيد.`} 
+                    speed={25}
+                    onComplete={() => setTypingStage(4)}
+                    cursor={typingStage === 3}
+                  />
+                </motion.p>
+              )}
+            </div>
             
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap gap-3"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: typingStage >= 4 ? 1 : 0, y: typingStage >= 4 ? 0 : 10 }}
+              transition={{ duration: 0.5 }}
+              className="flex flex-wrap gap-2.5"
             >
               <Link href="/design">
                 <Button 
-                  size="lg" 
-                  className="bg-primary hover:bg-yellow-600 text-white px-6 py-5 text-base rounded-xl shadow-lg shadow-primary/30 hover:scale-105 transition-transform"
+                  size="default" 
+                  className="bg-primary hover:bg-yellow-600 text-white px-5 py-3 text-sm rounded-xl shadow-lg shadow-primary/30 hover:scale-105 transition-transform"
                 >
                   صمم مساحتك مجاناً <Wand2 className="w-4 h-4 mr-2" />
                 </Button>
               </Link>
               <Button 
                 onClick={() => openInquiry()}
-                size="lg" 
+                size="default" 
                 variant="outline"
-                className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-5 text-base rounded-xl backdrop-blur-sm"
+                className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-5 py-3 text-sm rounded-xl backdrop-blur-sm"
               >
                 اطلب استشارة مجانية
               </Button>
               <Link href="/projects">
                 <Button 
-                  size="lg" 
+                  size="default" 
                   variant="outline" 
-                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-5 text-base rounded-xl backdrop-blur-sm"
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-5 py-3 text-sm rounded-xl backdrop-blur-sm"
                 >
                   شاهد أعمالنا
                   <ArrowLeft className="w-4 h-4 mr-2" />
@@ -241,8 +305,8 @@ export default function Home() {
             </div>
             <div className="lg:w-1/2 relative">
               <div className="grid grid-cols-2 gap-4">
-                <img src="https://images.unsplash.com/photo-1541888086925-0c770c4013fd?w=800&q=80" className="rounded-2xl w-full h-48 object-cover mt-8 shadow-lg" alt="Construction 1" />
-                <img src="https://images.unsplash.com/photo-1504307651254-35680f356fce?w=800&q=80" className="rounded-2xl w-full h-64 object-cover shadow-lg" alt="Construction 2" />
+                <img src={`${import.meta.env.BASE_URL}images/story-1.png`} className="rounded-2xl w-full h-48 object-cover mt-8 shadow-lg" alt="Construction 1" />
+                <img src={`${import.meta.env.BASE_URL}images/service-painting.png`} className="rounded-2xl w-full h-64 object-cover shadow-lg" alt="Construction 2" />
               </div>
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-full shadow-2xl">
                 <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white">
@@ -301,7 +365,7 @@ export default function Home() {
             <div className="lg:w-1/2 relative">
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
                 <img 
-                  src="https://pixabay.com/get/g7eecc74e04386bc1b83919bd663a337032898b4f699f5004ac3a106281f3787495b7ff6a217fe67251ebfa5f13c5908d14eb602b21bf2082784a8adfbe7e841c_1280.jpg" 
+                  src={`${import.meta.env.BASE_URL}images/hero-3d.png`} 
                   alt="Why Choose Us" 
                   className="w-full h-auto"
                 />

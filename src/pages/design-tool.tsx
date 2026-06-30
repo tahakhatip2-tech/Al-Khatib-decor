@@ -125,7 +125,11 @@ export default function DesignTool() {
     }, 400);
 
     try {
-      const genAI = new GoogleGenerativeAI("AIzaSyDnvzheZtLhAEtI7Gpcf4QA19b_6Yvjs8E");
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      if (!apiKey) {
+        throw new Error("Gemini API Key is missing. Please set VITE_GEMINI_API_KEY.");
+      }
+      const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
       const roomLabel = ROOM_TYPES.find(r => r.id === roomType)?.label || "room";
