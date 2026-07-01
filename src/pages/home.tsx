@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { Layout } from "@/components/layout";
+import { ImageWithWatermark } from "@/components/logo";
 import { ServiceCard } from "@/components/service-card";
 import { InquiryModal } from "@/components/inquiry-modal";
 import { SERVICES, PROJECTS, COMPANY_INFO } from "@/data/mock-data";
@@ -305,8 +306,8 @@ export default function Home() {
             </div>
             <div className="lg:w-1/2 relative">
               <div className="grid grid-cols-2 gap-4">
-                <img src={`${import.meta.env.BASE_URL}images/story-1.png`} className="rounded-2xl w-full h-48 object-cover mt-8 shadow-lg" alt="Construction 1" />
-                <img src={`${import.meta.env.BASE_URL}images/service-painting.png`} className="rounded-2xl w-full h-64 object-cover shadow-lg" alt="Construction 2" />
+                <ImageWithWatermark src={`${import.meta.env.BASE_URL}images/story-1.png`} className="rounded-2xl w-full h-48 mt-8 shadow-lg" alt="Construction 1" />
+                <ImageWithWatermark src={`${import.meta.env.BASE_URL}images/service-painting.png`} className="rounded-2xl w-full h-64 shadow-lg" alt="Construction 2" />
               </div>
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-full shadow-2xl">
                 <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white">
@@ -536,10 +537,10 @@ export default function Home() {
                 transition={{ delay: idx * 0.1 }}
                 className="group relative rounded-2xl overflow-hidden shadow-lg aspect-[4/3] block"
               >
-                <img 
+                <ImageWithWatermark 
                   src={project.gallery?.[0] || project.image} 
                   alt={project.title}  
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
                 

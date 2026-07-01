@@ -35,8 +35,13 @@ export function Logo({ variant = "full", size = "md", className = "" }: LogoProp
 
   if (variant === "watermark") {
     return (
-      <div className={`opacity-80 mix-blend-multiply ${className}`}>
-        <LogoIcon size={s} />
+      <div className={`opacity-90 drop-shadow-md ${className}`}>
+        <div 
+          className="rounded-full border-2 border-yellow-500 bg-white/90 overflow-hidden flex items-center justify-center backdrop-blur-sm"
+          style={{ width: s, height: s }}
+        >
+          <LogoIcon size={s - 8} className="object-contain" />
+        </div>
       </div>
     );
   }
@@ -70,8 +75,8 @@ export function ImageWithWatermark({
   return (
     <div className={`relative overflow-hidden ${className}`}>
       <img src={src} alt={alt} className={`w-full h-full object-cover ${imgClassName}`} />
-      <div className="absolute top-3 right-3 z-10">
-        <Logo variant="watermark" size="md" />
+      <div className="absolute top-3 right-3 z-10 pointer-events-none">
+        <Logo variant="watermark" size="sm" />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { useParams, Link } from "wouter";
 import { Layout } from "@/components/layout";
 import { InquiryModal } from "@/components/inquiry-modal";
 import { ImageGallery } from "@/components/image-gallery";
+import { ImageWithWatermark } from "@/components/logo";
 import { PROJECTS, COMPANY_INFO } from "@/data/mock-data";
 import { Button } from "@/components/ui/button";
 import { Calendar, Tag, MapPin, Ruler, MessageSquare, Phone, ArrowRight } from "lucide-react";
@@ -35,7 +36,7 @@ export default function ProjectDetail() {
 
       {/* Hero */}
       <div className="relative h-64 md:h-80 overflow-hidden">
-        <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+        <ImageWithWatermark src={project.image} alt={project.title} className="w-full h-full" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="absolute bottom-0 right-0 left-0 p-8" dir="rtl">
           <div className="container mx-auto">
@@ -139,11 +140,11 @@ export default function ProjectDetail() {
                   <div className="space-y-3">
                     {relatedProjects.map(rp => (
                       <Link key={rp.id} href={`/projects/${rp.id}`} className="group flex gap-3 items-center p-2 rounded-xl hover:bg-slate-50 transition-colors">
-                        <img
+                        <ImageWithWatermark
                           src={rp.image}
                           alt={rp.title}
-                          className="w-16 h-14 rounded-xl object-cover flex-shrink-0"
-                          onError={e => { (e.target as HTMLImageElement).src = "https://placehold.co/64x56?text=..."; }}
+                          className="w-16 h-14 rounded-xl flex-shrink-0"
+                          imgClassName="object-cover"
                         />
                         <div className="flex-1 min-w-0">
                           <p className="font-bold text-slate-800 text-sm line-clamp-2">{rp.title}</p>

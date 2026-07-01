@@ -3,6 +3,7 @@ import { useParams, Link } from "wouter";
 import { Layout } from "@/components/layout";
 import { InquiryModal } from "@/components/inquiry-modal";
 import { ImageGallery } from "@/components/image-gallery";
+import { ImageWithWatermark } from "@/components/logo";
 import { SERVICES } from "@/data/mock-data";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, CheckCircle2, ArrowRight, Phone, Tag } from "lucide-react";
@@ -38,7 +39,7 @@ export default function ServiceDetail() {
 
       {/* Page Hero */}
       <div className="relative h-64 md:h-80 overflow-hidden">
-        <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+        <ImageWithWatermark src={service.image} alt={service.title} className="w-full h-full" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="absolute bottom-0 right-0 left-0 p-8" dir="rtl">
           <div className="container mx-auto">

@@ -3,6 +3,7 @@ import { PageHero } from "@/components/page-hero";
 import { CheckCircle2, Target, Eye, ShieldCheck, Users, Trophy, Award, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
+import { ImageWithWatermark } from "@/components/logo";
 
 export default function About() {
   const timeline = [
@@ -80,7 +81,7 @@ export default function About() {
             
             <div className="lg:w-1/2 relative">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <img 
+                <ImageWithWatermark 
                   src="https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?w=800&q=80" 
                   alt="فريق العمل" 
                   className="w-full h-auto"
