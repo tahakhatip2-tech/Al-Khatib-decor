@@ -535,23 +535,30 @@ export default function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="group relative rounded-2xl overflow-hidden shadow-lg aspect-[4/3] block"
+                className="group relative rounded-3xl overflow-hidden shadow-lg bg-white flex flex-col border border-slate-100 hover:shadow-xl transition-all"
               >
-                <ImageWithWatermark 
-                  src={project.gallery?.[0] || project.image} 
-                  alt={project.title}  
-                  className="w-full h-full transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                <Link href={`/projects/${project.id}`} className="block relative h-56 sm:h-64 overflow-hidden cursor-pointer">
+                  <ImageWithWatermark 
+                    src={project.gallery?.[0] || project.image} 
+                    alt={project.title}  
+                    className="w-full h-full transition-transform duration-700 group-hover:scale-105 object-cover"
+                  />
+                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-primary font-bold text-xs px-3 py-1 rounded-full shadow-sm pointer-events-none">
+                    {project.category}
+                  </div>
+                </Link>
                 
-                <div className="absolute inset-0 p-6 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform">
-                  <span className="text-primary font-bold text-sm mb-2">{project.category}</span>
-                  <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                  <Button asChild variant="link" className="text-white p-0 h-auto font-bold opacity-0 group-hover:opacity-100 transition-opacity relative z-20 cursor-pointer">
-                    <Link href={`/projects/${project.id}`}>
-                      تفاصيل المشروع <ArrowLeft className="w-4 h-4 mr-1" />
-                    </Link>
-                  </Button>
+                <div className="p-6 flex flex-col flex-grow">
+                  <Link href={`/projects/${project.id}`} className="hover:text-primary transition-colors">
+                    <h3 className="text-xl font-bold text-secondary mb-3">{project.title}</h3>
+                  </Link>
+                  <p className="text-slate-600 text-sm line-clamp-2 mb-6 flex-grow">{project.description}</p>
+                  <Link href={`/projects/${project.id}`} className="mt-auto block">
+                    <span className="w-full bg-slate-50 hover:bg-primary text-secondary hover:text-white border border-slate-100 hover:border-transparent rounded-xl transition-all duration-300 inline-flex items-center justify-center min-h-11 px-4 py-2 text-sm font-bold cursor-pointer group/btn shadow-sm">
+                      تفاصيل المشروع 
+                      <ArrowLeft className="w-4 h-4 mr-2 group-hover/btn:-translate-x-1 transition-transform" />
+                    </span>
+                  </Link>
                 </div>
               </motion.div>
             ))}

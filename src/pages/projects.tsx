@@ -100,30 +100,34 @@ export default function Projects() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ delay: idx * 0.1 }}
-                        className="group relative rounded-3xl overflow-hidden shadow-lg aspect-[4/3] block bg-white"
+                        className="group relative rounded-3xl overflow-hidden shadow-lg bg-white flex flex-col border border-slate-100 hover:shadow-xl transition-all"
                       >
-                        <img 
-                          src={project.image} 
-                          alt={project.title} 
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        {/* Brand Watermark */}
-                        <div className="absolute top-3 right-3 z-10 pointer-events-none">
-                          <Logo variant="watermark" size="sm" />
-                        </div>
-                        <div className="absolute inset-0 bg-secondary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm flex flex-col justify-center items-center p-8 text-center text-white">
-                          <span className="text-primary font-bold text-sm mb-3 bg-white/10 px-3 py-1 rounded-full">{project.category}</span>
-                          <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
-                          <p className="text-white/80 line-clamp-3 mb-6 text-sm">{project.description}</p>
-                          <Button asChild className="bg-primary hover:bg-white hover:text-primary text-white rounded-xl shadow-lg transition-colors relative z-20 cursor-pointer">
-                            <Link href={`/projects/${project.id}`}>
-                              تفاصيل المشروع <ArrowLeft className="w-4 h-4 mr-2" />
-                            </Link>
-                          </Button>
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 group-hover:opacity-0 transition-opacity duration-300">
-                          <span className="text-primary font-bold text-sm mb-1 block">{project.category}</span>
-                          <h3 className="text-xl font-bold text-white">{project.title}</h3>
+                        <Link href={`/projects/${project.id}`} className="block relative h-56 sm:h-64 overflow-hidden cursor-pointer">
+                          <img 
+                            src={project.image} 
+                            alt={project.title} 
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                          {/* Brand Watermark */}
+                          <div className="absolute top-3 right-3 z-10 pointer-events-none">
+                            <Logo variant="watermark" size="sm" />
+                          </div>
+                          <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-primary font-bold text-xs px-3 py-1 rounded-full shadow-sm pointer-events-none">
+                            {project.category}
+                          </div>
+                        </Link>
+                        
+                        <div className="p-6 flex flex-col flex-grow">
+                          <Link href={`/projects/${project.id}`} className="hover:text-primary transition-colors">
+                            <h3 className="text-xl font-bold text-secondary mb-3">{project.title}</h3>
+                          </Link>
+                          <p className="text-slate-600 text-sm line-clamp-2 mb-6 flex-grow">{project.description}</p>
+                          <Link href={`/projects/${project.id}`} className="mt-auto block">
+                            <span className="w-full bg-slate-50 hover:bg-primary text-secondary hover:text-white border border-slate-100 hover:border-transparent rounded-xl transition-all duration-300 inline-flex items-center justify-center min-h-11 px-4 py-2 text-sm font-bold cursor-pointer group/btn shadow-sm">
+                              تفاصيل المشروع 
+                              <ArrowLeft className="w-4 h-4 mr-2 group-hover/btn:-translate-x-1 transition-transform" />
+                            </span>
+                          </Link>
                         </div>
                       </motion.div>
                   ))}
