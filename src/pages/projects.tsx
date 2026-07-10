@@ -115,11 +115,11 @@ export default function Projects() {
                           <span className="text-primary font-bold text-sm mb-3 bg-white/10 px-3 py-1 rounded-full">{project.category}</span>
                           <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
                           <p className="text-white/80 line-clamp-3 mb-6 text-sm">{project.description}</p>
-                          <Link href={`/projects/${project.id}`}>
-                            <Button className="bg-primary hover:bg-white hover:text-primary text-white rounded-xl shadow-lg transition-colors">
+                          <Button asChild className="bg-primary hover:bg-white hover:text-primary text-white rounded-xl shadow-lg transition-colors relative z-20 cursor-pointer">
+                            <Link href={`/projects/${project.id}`}>
                               تفاصيل المشروع <ArrowLeft className="w-4 h-4 mr-2" />
-                            </Button>
-                          </Link>
+                            </Link>
+                          </Button>
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 group-hover:opacity-0 transition-opacity duration-300">
                           <span className="text-primary font-bold text-sm mb-1 block">{project.category}</span>

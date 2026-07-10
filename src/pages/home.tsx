@@ -547,11 +547,11 @@ export default function Home() {
                 <div className="absolute inset-0 p-6 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform">
                   <span className="text-primary font-bold text-sm mb-2">{project.category}</span>
                   <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                  <Link href={`/projects/${project.id}`}>
-                    <Button variant="link" className="text-white p-0 h-auto font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Button asChild variant="link" className="text-white p-0 h-auto font-bold opacity-0 group-hover:opacity-100 transition-opacity relative z-20 cursor-pointer">
+                    <Link href={`/projects/${project.id}`}>
                       تفاصيل المشروع <ArrowLeft className="w-4 h-4 mr-1" />
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                 </div>
               </motion.div>
             ))}
