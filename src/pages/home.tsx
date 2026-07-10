@@ -7,7 +7,7 @@ import { ServiceCard } from "@/components/service-card";
 import { InquiryModal } from "@/components/inquiry-modal";
 import { SERVICES, PROJECTS, COMPANY_INFO } from "@/data/mock-data";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle2, ChevronLeft, Building, HardHat, ShieldCheck, Trophy, ArrowRight, Clock, Star, Quote, Target, Eye, Users, ChevronRight, Wand2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ChevronLeft, Building, HardHat, ShieldCheck, Trophy, ArrowRight, Clock, Star, Quote, Target, Eye, Users, ChevronRight, Wand2, MapPin } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { useRef } from "react";
 
