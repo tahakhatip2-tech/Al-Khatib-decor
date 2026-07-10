@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Building2, Users, CalendarDays, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
-import { Logo } from "@/components/logo";
+import { Logo, ImageWithWatermark } from "@/components/logo";
 
 export default function Projects() {
   const categories = [
