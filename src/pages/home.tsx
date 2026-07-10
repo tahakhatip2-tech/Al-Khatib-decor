@@ -498,15 +498,34 @@ export default function Home() {
       </section>
 
       {/* Partners/Certifications */}
-      <section className="py-12 bg-slate-100 border-y border-slate-200">
+      <section className="py-16 bg-slate-50 border-y border-slate-200">
         <div className="container mx-auto px-4">
-          <p className="text-center text-slate-500 font-medium mb-8">شركاء النجاح والموردين المعتمدين</p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="w-32 h-16 bg-slate-300 rounded-lg flex items-center justify-center text-slate-500 font-bold text-lg shadow-inner">
-                شريك {i}
-              </div>
-            ))}
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <h2 className="text-3xl font-black text-secondary">شركاء النجاح والموردين المعتمدين</h2>
+            <div className="w-24 h-1 bg-primary/30 mx-auto mt-4 rounded-full"></div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center hover:shadow-md transition-shadow hover:-translate-y-1 duration-300">
+              <span className="font-black text-2xl text-secondary mb-2">جوتن</span>
+              <span className="text-primary font-bold">Jotun Paints</span>
+            </div>
+            
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center hover:shadow-md transition-shadow hover:-translate-y-1 duration-300">
+              <span className="font-black text-2xl text-secondary mb-2">ناشونال</span>
+              <span className="text-primary font-bold">National Paints</span>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center hover:shadow-md transition-shadow hover:-translate-y-1 duration-300">
+              <span className="font-bold text-lg text-secondary mb-2">مواد بناء زيد النجار</span>
+              <span className="text-slate-500 text-sm mb-2 flex items-center gap-1"><MapPin className="w-3 h-3" /> جبل النصر</span>
+              <a href="tel:0795121560" className="text-primary font-black bg-primary/5 px-4 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors" dir="ltr">079 512 1560</a>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center hover:shadow-md transition-shadow hover:-translate-y-1 duration-300">
+              <span className="font-bold text-lg text-secondary mb-2">مواد بناء مجدي أبو سيف</span>
+              <span className="text-slate-500 text-sm mb-2 flex items-center gap-1"><MapPin className="w-3 h-3" /> جبل النصر</span>
+              <a href="tel:0797376682" className="text-primary font-black bg-primary/5 px-4 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors" dir="ltr">079 737 6682</a>
+            </div>
           </div>
         </div>
       </section>
@@ -541,7 +560,8 @@ export default function Home() {
                   <ImageWithWatermark 
                     src={project.gallery?.[0] || project.image} 
                     alt={project.title}  
-                    className="w-full h-full transition-transform duration-700 group-hover:scale-105 object-cover"
+                    className="w-full h-full"
+                    imgClassName="transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-primary font-bold text-xs px-3 py-1 rounded-full shadow-sm pointer-events-none">
                     {project.category}

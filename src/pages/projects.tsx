@@ -103,15 +103,12 @@ export default function Projects() {
                         className="group relative rounded-3xl overflow-hidden shadow-lg bg-white flex flex-col border border-slate-100 hover:shadow-xl transition-all"
                       >
                         <Link href={`/projects/${project.id}`} className="block relative h-56 sm:h-64 overflow-hidden cursor-pointer">
-                          <img 
+                          <ImageWithWatermark 
                             src={project.image} 
-                            alt={project.title} 
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            alt={project.title}
+                            className="w-full h-full"
+                            imgClassName="transition-transform duration-700 group-hover:scale-105"
                           />
-                          {/* Brand Watermark */}
-                          <div className="absolute top-3 right-3 z-10 pointer-events-none">
-                            <Logo variant="watermark" size="sm" />
-                          </div>
                           <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-primary font-bold text-xs px-3 py-1 rounded-full shadow-sm pointer-events-none">
                             {project.category}
                           </div>
