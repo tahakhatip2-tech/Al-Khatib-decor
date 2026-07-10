@@ -91,8 +91,12 @@ export function Layout({ children }: { children: ReactNode }) {
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="group hover:opacity-90 transition-opacity">
+          <Link href="/" className="group hover:opacity-90 transition-opacity flex items-center gap-3">
             <Logo variant="full" size="md" />
+            <div className="flex flex-col leading-tight">
+              <span className="text-secondary font-black text-lg md:text-xl leading-tight">الخطيب</span>
+              <span className="text-primary font-bold text-sm md:text-base leading-tight">للمقاولات والعزل والديكور</span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -200,8 +204,12 @@ export function Layout({ children }: { children: ReactNode }) {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             <div className="space-y-4">
-              <Link href="/" className="inline-block hover:opacity-90">
+              <Link href="/" className="inline-flex items-center gap-3 hover:opacity-90">
                 <Logo variant="white" size="md" />
+                <div className="flex flex-col leading-tight">
+                  <span className="text-white font-black text-xl leading-tight">الخطيب</span>
+                  <span className="text-primary font-bold text-sm leading-tight">للمقاولات والعزل والديكور</span>
+                </div>
               </Link>
               <p className="text-sm leading-relaxed">
                 مؤسسة رائدة في مجال المقاولات والتشطيبات والديكور الداخلي والخارجي، نقدم خدمات متكاملة بأعلى معايير الجودة والاحترافية لتلبية طموحات عملائنا.
