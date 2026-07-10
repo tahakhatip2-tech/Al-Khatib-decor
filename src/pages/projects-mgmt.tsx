@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
@@ -8,11 +8,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { SessionStore } from "@/data/hr-store";
 import { ProjectStore, ExpenseStore, PaymentStore, getProjectSummary } from "@/data/project-store";
-import type { Project, ProjectExpense, ProjectPayment, ProjectStatus, ExpenseCategory, PaymentMethod } from "@/types/project";
+import type { Project, ProjectExpense, ProjectPayment, ProjectStatus, ExpenseCategory, PaymentMethod, ProjectSummary } from "@/types/project";
+import { PaymentReceiptModal } from "@/components/payment-receipt";
 import {
   FolderOpen, Plus, Trash2, Edit, TrendingUp, TrendingDown,
   DollarSign, CheckCircle2, Clock, PauseCircle, XCircle,
-  ChevronRight, Wallet, Receipt, BarChart3, ArrowRight, X
+  ChevronRight, Wallet, Receipt, BarChart3, ArrowRight, X, FileText
 } from "lucide-react";
 
 const STATUS_MAP: Record<ProjectStatus, { label: string; color: string; icon: React.ReactNode }> = {
@@ -47,6 +48,8 @@ export default function ProjectsMgmt() {
   const [isProjModalOpen, setIsProjModalOpen] = useState(false);
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [isReceiptOpen, setIsReceiptOpen] = useState(false);
+  const [receiptPayment, setReceiptPayment] = useState<ProjectPayment | null>(null);
   const [activeDetailTab, setActiveDetailTab] = useState<'overview' | 'expenses' | 'payments'>('overview');
 
   // Forms
@@ -344,8 +347,16 @@ export default function ProjectsMgmt() {
                           <div className="font-medium text-sm text-slate-800">{pay.notes || 'دفعة'}</div>
                           <div className="text-xs text-slate-500 mt-0.5">{PAY_METHODS[pay.method]} {pay.reference ? `· ${pay.reference}` : ''} · {pay.date}</div>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
                           <span className="font-bold text-green-600">{pay.amount.toLocaleString()} د</span>
+                          <button
+                            onClick={() => { setReceiptPayment(pay); setIsReceiptOpen(true); }}
+                            className="flex items-center gap-1 text-xs bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-lg px-2 py-1 transition-colors"
+                            title="طباعة سند قبض"
+                          >
+                            <FileText className="w-3.5 h-3.5" />
+                            سند
+                          </button>
                           <button onClick={() => { PaymentStore.delete(pay.id); setSelectedProject(ProjectStore.getById(selectedProject.id) || null); }} className="text-slate-400 hover:text-red-500">
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -368,6 +379,14 @@ export default function ProjectsMgmt() {
         )}
       </div>
 
+      {/* Payment Receipt Modal */}
+      {isReceiptOpen && receiptPayment && selectedProject && (
+        <PaymentReceiptModal
+          payment={receiptPayment}
+          summary={getProjectSummary(selectedProject.id)}
+          onClose={() => { setIsReceiptOpen(false); setReceiptPayment(null); }}
+        />
+      )}
       {/* Project Modal */}
       {isProjModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
