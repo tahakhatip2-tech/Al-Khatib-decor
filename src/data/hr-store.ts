@@ -6,7 +6,7 @@
 import type {
   Employee, Task, AttendanceRecord, MonthlyReport, HRSession,
   EmployeeRole, EmployeeDepartment, TaskPriority, TaskStatus,
-  FinancialTransaction, FinancialTransactionType
+  AttendanceStatus, FinancialTransaction, FinancialTransactionType
 } from '@/types/hr';
 
 // ── Storage Keys ────────────────────────────────────────────
