@@ -20,8 +20,23 @@ export interface Employee {
   phone: string;
   joinDate: string;        // ISO date string
   isActive: boolean;
+  salaryType?: 'monthly' | 'daily'; // نوع الراتب
+  salaryAmount?: number;            // قيمة الراتب أو الأجرة اليومية
   avatar?: string;         // initials color hex
   notes?: string;
+  createdAt: string;
+}
+
+export type FinancialTransactionType = 'advance' | 'bonus' | 'deduction' | 'salary_payment';
+
+export interface FinancialTransaction {
+  id: string;
+  employeeId: string;
+  type: FinancialTransactionType;
+  amount: number;
+  date: string; // YYYY-MM-DD
+  notes?: string;
+  recordedBy: string; // admin id
   createdAt: string;
 }
 

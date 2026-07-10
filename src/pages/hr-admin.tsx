@@ -6,34 +6,40 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { SessionStore, EmployeeStore, TaskStore } from "@/data/hr-store";
+import { SessionStore, EmployeeStore, TaskStore, FinancialStore } from "@/data/hr-store";
 import { 
   LogOut, Users, ClipboardList, Plus, UserPlus, 
   Settings, CheckCircle2, Clock, Trash2, Edit
 } from "lucide-react";
-import type { Employee, Task, EmployeeRole, EmployeeDepartment, TaskPriority } from "@/types/hr";
+import type { Employee, Task, FinancialTransaction, EmployeeRole, EmployeeDepartment, TaskPriority, FinancialTransactionType } from "@/types/hr";
 
 export default function HRAdmin() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   
   const [admin, setAdmin] = useState<Employee | null>(null);
-  const [activeTab, setActiveTab] = useState<'overview' | 'employees' | 'tasks'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'employees' | 'tasks' | 'financials'>('overview');
   
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [transactions, setTransactions] = useState<FinancialTransaction[]>([]);
 
   // Modals state
   const [isEmpModalOpen, setIsEmpModalOpen] = useState(false);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [isFinModalOpen, setIsFinModalOpen] = useState(false);
+  const [isFinHistoryOpen, setIsFinHistoryOpen] = useState(false);
+  const [selectedEmpForFin, setSelectedEmpForFin] = useState<Employee | null>(null);
   
   // Forms state
-  const [empForm, setEmpForm] = useState<Partial<Employee>>({ role: 'employee', department: 'interior' });
+  const [empForm, setEmpForm] = useState<Partial<Employee>>({ role: 'employee', department: 'interior', salaryType: 'monthly', salaryAmount: 0 });
   const [taskForm, setTaskForm] = useState<Partial<Task>>({ priority: 'medium', status: 'pending' });
+  const [finForm, setFinForm] = useState<Partial<FinancialTransaction>>({ type: 'advance' });
 
   const refreshData = () => {
     setEmployees(EmployeeStore.getAll().filter(e => e.role !== 'admin')); // hide root admins
     setTasks(TaskStore.getAll().sort((a,b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
+    setTransactions(FinancialStore.getAll().sort((a,b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
   };
 
   useEffect(() => {
@@ -85,12 +91,34 @@ export default function HRAdmin() {
         phone: empForm.phone || '',
         joinDate: new Date().toISOString().split('T')[0],
         isActive: true,
+        salaryType: empForm.salaryType || 'monthly',
+        salaryAmount: empForm.salaryAmount || 0,
       });
       toast({ title: "تم إضافة الموظف بنجاح" });
     }
     
     setIsEmpModalOpen(false);
-    setEmpForm({ role: 'employee', department: 'interior' });
+    setEmpForm({ role: 'employee', department: 'interior', salaryType: 'monthly', salaryAmount: 0 });
+    refreshData();
+  };
+
+  // --- Financial Actions ---
+  const handleSaveFinancial = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!finForm.employeeId || !finForm.type || !finForm.amount || !admin) return;
+
+    FinancialStore.add({
+      employeeId: finForm.employeeId,
+      type: finForm.type as FinancialTransactionType,
+      amount: Number(finForm.amount),
+      date: new Date().toISOString().split('T')[0],
+      notes: finForm.notes,
+      recordedBy: admin.id
+    });
+
+    toast({ title: "تم تسجيل الحركة المالية بنجاح" });
+    setIsFinModalOpen(false);
+    setFinForm({ type: 'advance' });
     refreshData();
   };
 
@@ -167,6 +195,12 @@ export default function HRAdmin() {
             className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'tasks' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'}`}
           >
             إدارة المهام
+          </button>
+          <button 
+            onClick={() => setActiveTab('financials')}
+            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'financials' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'}`}
+          >
+            المالية والأجور
           </button>
         </div>
 
@@ -312,6 +346,63 @@ export default function HRAdmin() {
           </div>
         )}
 
+        {/* ================= FINANCIALS TAB ================= */}
+        {activeTab === 'financials' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+              <h2 className="text-lg font-bold text-slate-800">السجل المالي والأجور</h2>
+              <Button onClick={() => { setFinForm({ type: 'advance' }); setIsFinModalOpen(true); }} className="h-9">
+                <Plus className="w-4 h-4 ml-2" /> تسجيل حركة مالية
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-right">
+                <thead className="bg-slate-50 text-slate-500">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">الموظف</th>
+                    <th className="px-4 py-3 font-medium">الراتب الأساسي</th>
+                    <th className="px-4 py-3 font-medium">إجمالي السلف</th>
+                    <th className="px-4 py-3 font-medium">إجمالي الخصومات</th>
+                    <th className="px-4 py-3 font-medium">إجمالي المكافآت</th>
+                    <th className="px-4 py-3 font-medium text-center">إجراءات</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {employees.map(emp => {
+                    const empTrans = transactions.filter(t => t.employeeId === emp.id);
+                    const advances = empTrans.filter(t => t.type === 'advance').reduce((sum, t) => sum + t.amount, 0);
+                    const deductions = empTrans.filter(t => t.type === 'deduction').reduce((sum, t) => sum + t.amount, 0);
+                    const bonuses = empTrans.filter(t => t.type === 'bonus').reduce((sum, t) => sum + t.amount, 0);
+                    
+                    return (
+                      <tr key={emp.id} className="hover:bg-slate-50/50">
+                        <td className="px-4 py-3 font-bold text-slate-800">{emp.name}</td>
+                        <td className="px-4 py-3 text-slate-600">
+                          {emp.salaryAmount} دينار ({emp.salaryType === 'monthly' ? 'شهري' : 'يومي'})
+                        </td>
+                        <td className="px-4 py-3 text-red-500 font-medium">{advances} دينار</td>
+                        <td className="px-4 py-3 text-red-500 font-medium">{deductions} دينار</td>
+                        <td className="px-4 py-3 text-green-500 font-medium">{bonuses} دينار</td>
+                        <td className="px-4 py-3 flex justify-center gap-2">
+                          <Button variant="outline" size="sm" onClick={() => {
+                            setSelectedEmpForFin(emp);
+                            setIsFinHistoryOpen(true);
+                          }}>
+                            عرض الكشف
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {employees.length === 0 && (
+                    <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">لا يوجد موظفين مسجلين</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
       </div>
 
       {/* --- Employee Modal --- */}
@@ -363,6 +454,24 @@ export default function HRAdmin() {
                       <option value="employee">موظف (عامل/فني)</option>
                       <option value="supervisor">مشرف</option>
                     </select>
+                  </div>
+                  <div className="col-span-2 pt-2 border-t mt-2">
+                    <h4 className="text-sm font-bold text-slate-800 mb-2">البيانات المالية</h4>
+                  </div>
+                  <div>
+                    <label className="text-sm text-slate-600 mb-1 block">نوع الراتب *</label>
+                    <select 
+                      className="w-full h-10 px-3 rounded-md border border-slate-200 bg-white text-sm"
+                      value={empForm.salaryType || 'monthly'} 
+                      onChange={e => setEmpForm({...empForm, salaryType: e.target.value as any})}
+                    >
+                      <option value="monthly">راتب شهري</option>
+                      <option value="daily">يومية (مياومة)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-sm text-slate-600 mb-1 block">قيمة الراتب / اليومية (دينار) *</label>
+                    <Input type="number" min="0" required value={empForm.salaryAmount || ''} onChange={e => setEmpForm({...empForm, salaryAmount: Number(e.target.value)})} />
                   </div>
                 </div>
               </form>
@@ -439,6 +548,128 @@ export default function HRAdmin() {
             <div className="p-4 border-t bg-slate-50 flex justify-end gap-2">
               <Button type="button" variant="outline" onClick={() => setIsTaskModalOpen(false)}>إلغاء</Button>
               <Button type="submit" form="taskForm" className="bg-primary text-white">حفظ المهمة</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- Financial Modal --- */}
+      {isFinModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-md shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
+            <div className="p-4 border-b flex justify-between items-center bg-slate-50">
+              <h3 className="font-bold">تسجيل حركة مالية</h3>
+              <button onClick={() => setIsFinModalOpen(false)} className="text-slate-400 hover:text-slate-600">✕</button>
+            </div>
+            <div className="p-4 overflow-y-auto flex-1">
+              <form id="finForm" onSubmit={handleSaveFinancial} className="space-y-4">
+                <div>
+                  <label className="text-sm text-slate-600 mb-1 block">الموظف *</label>
+                  <select 
+                    required
+                    className="w-full h-10 px-3 rounded-md border border-slate-200 bg-white text-sm"
+                    value={finForm.employeeId || ''} 
+                    onChange={e => setFinForm({...finForm, employeeId: e.target.value})}
+                  >
+                    <option value="" disabled>-- اختر الموظف --</option>
+                    {employees.map(emp => (
+                      <option key={emp.id} value={emp.id}>{emp.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-sm text-slate-600 mb-1 block">نوع الحركة *</label>
+                  <select 
+                    required
+                    className="w-full h-10 px-3 rounded-md border border-slate-200 bg-white text-sm"
+                    value={finForm.type || 'advance'} 
+                    onChange={e => setFinForm({...finForm, type: e.target.value as any})}
+                  >
+                    <option value="advance">سلفة</option>
+                    <option value="deduction">خصم</option>
+                    <option value="bonus">مكافأة</option>
+                    <option value="salary_payment">تسليم راتب / يومية</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-sm text-slate-600 mb-1 block">القيمة (دينار) *</label>
+                  <Input type="number" min="0" required value={finForm.amount || ''} onChange={e => setFinForm({...finForm, amount: Number(e.target.value)})} />
+                </div>
+                <div>
+                  <label className="text-sm text-slate-600 mb-1 block">ملاحظات والتفاصيل</label>
+                  <Textarea className="resize-none h-20" value={finForm.notes || ''} onChange={e => setFinForm({...finForm, notes: e.target.value})} />
+                </div>
+              </form>
+            </div>
+            <div className="p-4 border-t bg-slate-50 flex justify-end gap-2">
+              <Button type="button" variant="outline" onClick={() => setIsFinModalOpen(false)}>إلغاء</Button>
+              <Button type="submit" form="finForm" className="bg-primary text-white">حفظ العملية</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- Financial History Modal --- */}
+      {isFinHistoryOpen && selectedEmpForFin && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-2xl shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
+            <div className="p-4 border-b flex justify-between items-center bg-slate-50">
+              <h3 className="font-bold">الكشف المالي: {selectedEmpForFin.name}</h3>
+              <button onClick={() => setIsFinHistoryOpen(false)} className="text-slate-400 hover:text-slate-600">✕</button>
+            </div>
+            <div className="p-4 overflow-y-auto flex-1">
+              <div className="mb-4 grid grid-cols-2 md:grid-cols-4 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div>
+                  <div className="text-xs text-slate-500">الراتب الأساسي</div>
+                  <div className="font-bold text-slate-800">{selectedEmpForFin.salaryAmount} دينار ({selectedEmpForFin.salaryType === 'monthly' ? 'شهري' : 'يومي'})</div>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-500">مجموع السلف</div>
+                  <div className="font-bold text-red-600">{transactions.filter(t => t.employeeId === selectedEmpForFin.id && t.type === 'advance').reduce((s, t) => s + t.amount, 0)} دينار</div>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-500">مجموع الخصومات</div>
+                  <div className="font-bold text-red-600">{transactions.filter(t => t.employeeId === selectedEmpForFin.id && t.type === 'deduction').reduce((s, t) => s + t.amount, 0)} دينار</div>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-500">مجموع المكافآت</div>
+                  <div className="font-bold text-green-600">{transactions.filter(t => t.employeeId === selectedEmpForFin.id && t.type === 'bonus').reduce((s, t) => s + t.amount, 0)} دينار</div>
+                </div>
+              </div>
+              
+              <h4 className="font-bold text-slate-800 mb-3 text-sm">سجل الحركات</h4>
+              <table className="w-full text-sm text-right">
+                <thead className="bg-slate-50 text-slate-500">
+                  <tr>
+                    <th className="px-4 py-2 font-medium">التاريخ</th>
+                    <th className="px-4 py-2 font-medium">النوع</th>
+                    <th className="px-4 py-2 font-medium">القيمة</th>
+                    <th className="px-4 py-2 font-medium">التفاصيل</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {transactions.filter(t => t.employeeId === selectedEmpForFin.id).map(t => (
+                    <tr key={t.id} className="hover:bg-slate-50">
+                      <td className="px-4 py-2 text-slate-600">{t.date}</td>
+                      <td className="px-4 py-2">
+                        <Badge variant="outline" className={
+                          t.type === 'advance' ? 'bg-orange-50 text-orange-600 border-orange-200' :
+                          t.type === 'deduction' ? 'bg-red-50 text-red-600 border-red-200' :
+                          t.type === 'bonus' ? 'bg-green-50 text-green-600 border-green-200' :
+                          'bg-blue-50 text-blue-600 border-blue-200'
+                        }>
+                          {t.type === 'advance' ? 'سلفة' : t.type === 'deduction' ? 'خصم' : t.type === 'bonus' ? 'مكافأة' : 'تسليم راتب'}
+                        </Badge>
+                      </td>
+                      <td className="px-4 py-2 font-bold text-slate-800">{t.amount} دينار</td>
+                      <td className="px-4 py-2 text-slate-500">{t.notes || '-'}</td>
+                    </tr>
+                  ))}
+                  {transactions.filter(t => t.employeeId === selectedEmpForFin.id).length === 0 && (
+                    <tr><td colSpan={4} className="px-4 py-4 text-center text-slate-500">لا يوجد حركات مسجلة</td></tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

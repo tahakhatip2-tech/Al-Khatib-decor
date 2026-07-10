@@ -5,7 +5,8 @@
 
 import type {
   Employee, Task, AttendanceRecord, MonthlyReport, HRSession,
-  EmployeeRole, EmployeeDepartment, TaskPriority, TaskStatus
+  EmployeeRole, EmployeeDepartment, TaskPriority, TaskStatus,
+  FinancialTransaction, FinancialTransactionType
 } from '@/types/hr';
 
 // ── Storage Keys ────────────────────────────────────────────
@@ -15,6 +16,7 @@ const KEYS = {
   ATTENDANCE: 'hr_attendance',
   REPORTS: 'hr_reports',
   SESSION: 'hr_session',
+  FINANCIALS: 'hr_financials',
 } as const;
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -53,6 +55,8 @@ const SEED_EMPLOYEES: Employee[] = [
     phone: '0782633162',
     joinDate: '2020-01-01',
     isActive: true,
+    salaryType: 'monthly',
+    salaryAmount: 1500,
     createdAt: '2020-01-01T00:00:00Z',
   },
   {
@@ -66,6 +70,8 @@ const SEED_EMPLOYEES: Employee[] = [
     phone: '0791234567',
     joinDate: '2021-03-15',
     isActive: true,
+    salaryType: 'monthly',
+    salaryAmount: 800,
     createdAt: '2021-03-15T00:00:00Z',
   },
   {
@@ -79,6 +85,8 @@ const SEED_EMPLOYEES: Employee[] = [
     phone: '0799876543',
     joinDate: '2022-06-01',
     isActive: true,
+    salaryType: 'daily',
+    salaryAmount: 25,
     createdAt: '2022-06-01T00:00:00Z',
   },
   {
@@ -92,6 +100,8 @@ const SEED_EMPLOYEES: Employee[] = [
     phone: '0795551234',
     joinDate: '2022-09-10',
     isActive: true,
+    salaryType: 'daily',
+    salaryAmount: 30,
     createdAt: '2022-09-10T00:00:00Z',
   },
   {
@@ -105,6 +115,8 @@ const SEED_EMPLOYEES: Employee[] = [
     phone: '0798765432',
     joinDate: '2023-01-20',
     isActive: true,
+    salaryType: 'monthly',
+    salaryAmount: 600,
     createdAt: '2023-01-20T00:00:00Z',
   },
 ];
@@ -164,14 +176,7 @@ const SEED_TASKS: Task[] = [
   },
 ];
 
-function seedIfEmpty(): void {
-  if (load<Employee>(KEYS.EMPLOYEES).length === 0) {
-    save(KEYS.EMPLOYEES, SEED_EMPLOYEES);
-  }
-  if (load<Task>(KEYS.TASKS).length === 0) {
-    save(KEYS.TASKS, SEED_TASKS);
-  }
-}
+
 
 // ── Employee CRUD ─────────────────────────────────────────────
 export const EmployeeStore = {
@@ -186,7 +191,13 @@ export const EmployeeStore = {
     return this.getAll().find(e => e.username === username);
   },
   add(data: Omit<Employee, 'id' | 'createdAt'>): Employee {
-    const emp: Employee = { ...data, id: uid(), createdAt: now() };
+    const emp: Employee = {
+      ...data,
+      id: uid(),
+      createdAt: now(),
+      salaryType: data.salaryType || 'monthly',
+      salaryAmount: data.salaryAmount || 0,
+    };
     const all = this.getAll();
     save(KEYS.EMPLOYEES, [...all, emp]);
     return emp;
@@ -357,6 +368,56 @@ export const SessionStore = {
   isLoggedIn(): boolean {
     return this.get() !== null;
   },
+};
+
+function seedIfEmpty(): void {
+  if (load<Employee>(KEYS.EMPLOYEES).length === 0) {
+    save(KEYS.EMPLOYEES, SEED_EMPLOYEES);
+  } else {
+    // Migration: Add salary fields to existing employees if missing
+    const emps = load<Employee>(KEYS.EMPLOYEES);
+    let updated = false;
+    emps.forEach(emp => {
+      if (!emp.salaryType) {
+        emp.salaryType = 'monthly';
+        emp.salaryAmount = 0;
+        updated = true;
+      }
+    });
+    if (updated) {
+      save(KEYS.EMPLOYEES, emps);
+    }
+  }
+
+  if (load<Task>(KEYS.TASKS).length === 0) {
+    save(KEYS.TASKS, SEED_TASKS);
+  }
+
+  if (!localStorage.getItem(KEYS.FINANCIALS)) {
+    save(KEYS.FINANCIALS, []);
+  }
+}
+
+export const FinancialStore = {
+  getAll(): FinancialTransaction[] {
+    return load<FinancialTransaction>(KEYS.FINANCIALS);
+  },
+  getByEmployee(empId: string): FinancialTransaction[] {
+    return this.getAll().filter(t => t.employeeId === empId);
+  },
+  add(data: Omit<FinancialTransaction, 'id' | 'createdAt'>): FinancialTransaction {
+    const transaction: FinancialTransaction = {
+      ...data,
+      id: `fin-${uid()}`,
+      createdAt: now()
+    };
+    const all = this.getAll();
+    save(KEYS.FINANCIALS, [...all, transaction]);
+    return transaction;
+  },
+  delete(id: string): void {
+    save(KEYS.FINANCIALS, this.getAll().filter(t => t.id !== id));
+  }
 };
 
 // Initialize seed data on import
