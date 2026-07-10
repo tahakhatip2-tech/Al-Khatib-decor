@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft, X, ZoomIn, Image } from "lucide-react";
+import { Logo } from "@/components/logo";
 
 interface ImageGalleryProps {
   images: string[];
@@ -52,12 +53,17 @@ export function ImageGallery({ images, title = "" }: ImageGalleryProps) {
         {/* Primary Image */}
         <div className="relative group overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]">
           {!hasError ? (
-            <img
-              src={mainImage}
-              alt={`${title} - صورة ${activeIdx + 1}`}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              onError={() => handleError(activeIdx)}
-            />
+            <>
+              <img
+                src={mainImage}
+                alt={`${title} - صورة ${activeIdx + 1}`}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                onError={() => handleError(activeIdx)}
+              />
+              <div className="absolute top-4 right-4 z-10 pointer-events-none">
+                <Logo variant="watermark" size="md" />
+              </div>
+            </>
           ) : (
             <div className="w-full h-full flex items-center justify-center text-slate-300">
               <Image className="w-16 h-16" />
@@ -163,6 +169,10 @@ export function ImageGallery({ images, title = "" }: ImageGalleryProps) {
             className="max-h-[90vh] max-w-[90vw] object-contain rounded-xl shadow-2xl"
             onClick={e => e.stopPropagation()}
           />
+          
+          <div className="absolute top-6 right-16 z-20 pointer-events-none opacity-80">
+            <Logo variant="watermark" size="lg" />
+          </div>
 
           {/* Lightbox Thumbnails */}
           {validImages.length > 1 && (
