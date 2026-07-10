@@ -1,4 +1,4 @@
-﻿// ============================================================
+// ============================================================
 // Project Store - LocalStorage Data Management
 // ============================================================
 
@@ -105,7 +105,7 @@ export const ProjectStore = {
   },
   getById(id: string): Project | undefined { return this.getAll().find(p => p.id === id); },
   add(data: Omit<Project, 'id' | 'createdAt'>): Project {
-    const p: Project = { ...data, id: proj-, createdAt: now() };
+    const p: Project = { ...data, id: `proj-${uid()}`, createdAt: now() };
     save(KEYS.PROJECTS, [...this.getAll(), p]);
     return p;
   },
@@ -129,7 +129,7 @@ export const ExpenseStore = {
   getAll(): ProjectExpense[] { seedIfEmpty(); return load<ProjectExpense>(KEYS.EXPENSES); },
   getByProject(projectId: string): ProjectExpense[] { return this.getAll().filter(e => e.projectId === projectId); },
   add(data: Omit<ProjectExpense, 'id' | 'createdAt'>): ProjectExpense {
-    const e: ProjectExpense = { ...data, id: exp-, createdAt: now() };
+    const e: ProjectExpense = { ...data, id: `exp-${uid()}`, createdAt: now() };
     save(KEYS.EXPENSES, [...this.getAll(), e]);
     return e;
   },
@@ -141,7 +141,7 @@ export const PaymentStore = {
   getAll(): ProjectPayment[] { seedIfEmpty(); return load<ProjectPayment>(KEYS.PAYMENTS); },
   getByProject(projectId: string): ProjectPayment[] { return this.getAll().filter(p => p.projectId === projectId); },
   add(data: Omit<ProjectPayment, 'id' | 'createdAt'>): ProjectPayment {
-    const p: ProjectPayment = { ...data, id: pay-, createdAt: now() };
+    const p: ProjectPayment = { ...data, id: `pay-${uid()}`, createdAt: now() };
     save(KEYS.PAYMENTS, [...this.getAll(), p]);
     return p;
   },
