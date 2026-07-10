@@ -9,7 +9,8 @@ import { useToast } from "@/hooks/use-toast";
 import { SessionStore, EmployeeStore, TaskStore, FinancialStore } from "@/data/hr-store";
 import { 
   LogOut, Users, ClipboardList, Plus, UserPlus, 
-  Settings, CheckCircle2, Clock, Trash2, Edit
+  Settings, CheckCircle2, Clock, Trash2, Edit,
+  UserCheck, FolderOpen
 } from "lucide-react";
 import type { Employee, Task, FinancialTransaction, EmployeeRole, EmployeeDepartment, TaskPriority, FinancialTransactionType } from "@/types/hr";
 
@@ -177,7 +178,7 @@ export default function HRAdmin() {
       <div className="container mx-auto px-4 py-6 max-w-6xl">
         
         {/* Navigation Tabs */}
-        <div className="flex space-x-2 space-x-reverse mb-8 bg-white p-1.5 rounded-xl shadow-sm border border-slate-100 inline-flex">
+        <div className="flex space-x-2 space-x-reverse mb-8 bg-white p-1.5 rounded-xl shadow-sm border border-slate-100 flex-wrap gap-1">
           <button 
             onClick={() => setActiveTab('overview')}
             className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'overview' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'}`}
@@ -201,6 +202,20 @@ export default function HRAdmin() {
             className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'financials' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'}`}
           >
             المالية والأجور
+          </button>
+          <button
+            onClick={() => setLocation('/hr/attendance')}
+            className="px-4 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 hover:bg-slate-100 flex items-center gap-1.5"
+          >
+            <UserCheck className="w-4 h-4" />
+            الحضور والغياب
+          </button>
+          <button
+            onClick={() => setLocation('/hr/projects')}
+            className="px-4 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 hover:bg-slate-100 flex items-center gap-1.5"
+          >
+            <FolderOpen className="w-4 h-4" />
+            إدارة المشاريع
           </button>
         </div>
 

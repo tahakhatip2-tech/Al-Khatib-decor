@@ -19,6 +19,8 @@ import DesignTool from "@/pages/design-tool";
 import HRPortal from "@/pages/hr-portal";
 import HRDashboard from "@/pages/hr-dashboard";
 import HRAdmin from "@/pages/hr-admin";
+import AttendanceMgmt from "@/pages/attendance-mgmt";
+import ProjectsMgmt from "@/pages/projects-mgmt";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient({
@@ -47,6 +49,8 @@ function Router() {
       <Route path="/hr" component={HRPortal} />
       <Route path="/hr/dashboard" component={HRDashboard} />
       <Route path="/hr/admin" component={HRAdmin} />
+      <Route path="/hr/attendance" component={AttendanceMgmt} />
+      <Route path="/hr/projects" component={ProjectsMgmt} />
       <Route component={NotFound} />
     </Switch>
   );

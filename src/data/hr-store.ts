@@ -298,6 +298,9 @@ export const AttendanceStore = {
       total: records.length,
     };
   },
+  markAttendance(employeeId: string, date: string, status: AttendanceStatus): AttendanceRecord {
+    return this.upsert(employeeId, date, { status });
+  },
 };
 
 // ── Reports ───────────────────────────────────────────────────
