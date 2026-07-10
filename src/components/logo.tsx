@@ -33,30 +33,15 @@ export function Logo({ variant = "full", size = "md", className = "" }: LogoProp
     return <LogoIcon size={s} className={className} />;
   }
 
-  if (variant === "watermark") {
-    return (
-      <div className={`opacity-90 drop-shadow-md ${className}`}>
-        <div 
-          className="rounded-full border-2 border-yellow-500 bg-white/90 overflow-hidden flex items-center justify-center backdrop-blur-sm"
-          style={{ width: s, height: s }}
-        >
-          <LogoIcon size={s - 8} className="object-contain" />
-        </div>
-      </div>
-    );
-  }
-
-  if (variant === "white") {
-    return (
-      <div className={`flex items-center justify-center ${className} bg-white/80 p-2 rounded-xl backdrop-blur-sm shadow-sm`} style={{ mixBlendMode: 'normal' }}>
-        <LogoIcon size={s} />
-      </div>
-    );
-  }
-
+  // Use the circular yellow border style for all variants (watermark, full, white)
   return (
-    <div className={`flex items-center justify-center ${className}`}>
-      <LogoIcon size={s} />
+    <div className={`drop-shadow-sm ${className}`}>
+      <div 
+        className="rounded-full border-2 border-yellow-500 bg-white overflow-hidden flex items-center justify-center shadow-inner"
+        style={{ width: s, height: s }}
+      >
+        <LogoIcon size={s - 8} className="object-contain" />
+      </div>
     </div>
   );
 }
